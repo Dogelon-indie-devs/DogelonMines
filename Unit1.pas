@@ -41,6 +41,7 @@ type
     procedure Game_start;
     procedure Clean_up;
     procedure Visualize_in_grid;
+    function  Stepped_on_a_mine(x,y:integer):boolean;
   end;
 
 const
@@ -136,6 +137,11 @@ begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
     hints[x,y]:= Count_mines_around_tile(x,y);
+end;
+
+function TForm1.Stepped_on_a_mine(x, y: integer): boolean;
+begin
+  result:= mines[x,y];
 end;
 
 procedure TForm1.Generate_grid_values;
