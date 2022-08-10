@@ -14,7 +14,8 @@ uses
   FMX.Forms,
   FMX.Dialogs,
   FMX.StdCtrls,
-  FMX.Controls.Presentation;
+  FMX.Controls.Presentation, System.Rtti, FMX.Grid.Style, FMX.Grid,
+  FMX.ScrollBox;
 
 type
   TForm1 = class(TForm)
@@ -22,6 +23,15 @@ type
     Footer: TToolBar;
     HeaderLabel: TLabel;
     Label1: TLabel;
+    Button1: TButton;
+    StringGrid1: TStringGrid;
+    StringColumn1: TStringColumn;
+    StringColumn2: TStringColumn;
+    StringColumn3: TStringColumn;
+    StringColumn4: TStringColumn;
+    StringColumn5: TStringColumn;
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,6 +39,8 @@ type
     procedure Generate_grid_values;
     procedure Place_hints;
     procedure Game_start;
+    procedure Clean_up;
+    procedure Visualize_in_grid;
   end;
 
 const
@@ -46,11 +58,47 @@ implementation
 
 {$R *.fmx}
 
-procedure TForm1.Game_start;
+procedure TForm1.Visualize_in_grid;
+begin
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      var mine_on_tile:= mines[x,y];
+      if mine_on_tile then
+        begin
+          StringGrid1.Cells[y,x]:= 'M';
+          continue;
+        end;
+
+      StringGrid1.Cells[y,x]:= hints[x,y].ToString;
+    end;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Clean_up;
+  Game_start;
+  Visualize_in_grid;
+end;
+
+procedure TForm1.Clean_up;
+begin
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      mines[x,y]:= false;
+      hints[x,y]:= 0;
+    end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
 begin
   SetLength(mines, desired_grid_size, desired_grid_size);
   SetLength(hints, desired_grid_size, desired_grid_size);
+end;
 
+procedure TForm1.Game_start;
+begin
   Generate_grid_values;
   Place_hints;
 
@@ -97,8 +145,8 @@ begin
 
   while mines_to_distribute>0 do
     begin
-      var x:= random(grid_size);
-      var y:= random(grid_size);
+      var x:= random(desired_grid_size);
+      var y:= random(desired_grid_size);
       var already_placed:= mines[x,y];
       if already_placed then continue;
 

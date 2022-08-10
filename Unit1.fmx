@@ -1,12 +1,13 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Header Footer Form'
+  Caption = 'DogelonMines'
   ClientHeight = 567
   ClientWidth = 384
   FormFactor.Width = 1440
   FormFactor.Height = 900
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object Header: TToolBar
     Size.Width = 384.000000000000000000
@@ -40,6 +41,46 @@ object Form1: TForm1
       TextSettings.HorzAlign = Center
       Text = 'Made for ELONgevity hackathon 2022'
       TabOrder = 1
+    end
+  end
+  object Button1: TButton
+    Position.X = 152.000000000000000000
+    Position.Y = 392.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Generate'
+    OnClick = Button1Click
+  end
+  object StringGrid1: TStringGrid
+    CanFocus = True
+    ClipChildren = True
+    Position.X = 64.000000000000000000
+    Position.Y = 88.000000000000000000
+    Size.Width = 265.000000000000000000
+    Size.Height = 265.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    RowHeight = 50.000000000000000000
+    RowCount = 5
+    Options = [ColLines, RowLines, AutoDisplacement]
+    Viewport.Width = 261.000000000000000000
+    Viewport.Height = 261.000000000000000000
+    object StringColumn1: TStringColumn
+      Size.Width = 50.000000000000000000
+    end
+    object StringColumn2: TStringColumn
+      Size.Width = 50.000000000000000000
+    end
+    object StringColumn3: TStringColumn
+      Size.Width = 50.000000000000000000
+    end
+    object StringColumn4: TStringColumn
+      Size.Width = 50.000000000000000000
+    end
+    object StringColumn5: TStringColumn
+      Size.Width = 50.000000000000000000
     end
   end
 end
