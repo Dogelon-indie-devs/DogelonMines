@@ -1,4 +1,4 @@
-unit Unit1;
+﻿unit Unit1;
 
 interface
 
@@ -66,7 +66,7 @@ begin
       var mine_on_tile:= mines[x,y];
       if mine_on_tile then
         begin
-          StringGrid1.Cells[y,x]:= 'M';
+          StringGrid1.Cells[y,x]:= '💣';
           continue;
         end;
 
