@@ -20,7 +20,7 @@ object Form1: TForm1
       Size.PlatformDefault = False
       StyleLookup = 'toollabel'
       TextSettings.HorzAlign = Center
-      Text = 'Title'
+      Text = 'Dogelon Mines concept'
     end
   end
   object Footer: TToolBar
@@ -31,5 +31,15 @@ object Form1: TForm1
     Size.PlatformDefault = False
     StyleLookup = 'bottomtoolbar'
     TabOrder = 1
+    object Label1: TLabel
+      Align = Contents
+      Size.Width = 384.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'toollabel'
+      TextSettings.HorzAlign = Center
+      Text = 'Made for ELONgevity hackathon 2022'
+      TabOrder = 1
+    end
   end
 end
