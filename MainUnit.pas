@@ -156,7 +156,8 @@ begin
       var unsafe_spot:= mines[x,y];
       if unsafe_spot then continue;
 
-      GameArray[X,Y].HintText.Text := 'SAFE';
+      GameArray[X,Y].HintText.TextSettings.FontColor:= TAlphaColors.Green;
+      GameArray[X,Y].HintText.Text := 'SAFE';  // ✓
       found_safe_spot:= true;
     end;
 end;
@@ -295,6 +296,8 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
+  if DebugMode then exit;
+
   SplashRectangle.Visible := True;
   HomeRectangle.Visible   := False;
   var SplashFrame := TSplashFrame.Create(SplashRectangle);
