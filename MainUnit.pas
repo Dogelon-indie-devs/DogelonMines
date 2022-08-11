@@ -183,6 +183,9 @@ begin
   SetLength(hints, desired_grid_size, desired_grid_size);
   SetLength(GameArray, desired_grid_size, desired_grid_size);
   CreateGameElements;
+  {$IFDEF MSWINDOWS}
+    MainForm.Constraints.MinWidth := 310;
+  {$ENDIF}
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
