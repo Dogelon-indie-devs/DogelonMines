@@ -3,9 +3,20 @@ unit FrameSplash;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
-  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Objects, FMX.Ani, FMX.Effects;
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+  FMX.Types,
+  FMX.Graphics,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Dialogs,
+  FMX.StdCtrls,
+  FMX.Objects,
+  FMX.Ani,
+  FMX.Effects;
 
 type
   TSplashFrame = class(TFrame)
@@ -27,17 +38,20 @@ type
 
 implementation
 
-uses MainUnit;
+uses
+  MainUnit;
 
 {$R *.fmx}
 
 procedure TSplashFrame.DogelonIndieDevsLabsImageFloatAnimationFinish(Sender: TObject);
 begin
-  if not DebugMode then
-    Sleep(1000);
+  Sleep(1000);
 
-  MainForm.HomeRectangle.Visible   := True;
+  MainForm.HomeRectangle.Visible := True;
   MainForm.SplashRectangle.Visible := False;
+
+  MainForm.MediaPlayer1.Play;
+  MainForm.Music_fade_in.Enabled:= true;
 end;
 
 end.

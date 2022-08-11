@@ -26,6 +26,7 @@ uses
   FMX.Filter.Effects,
   FMX.Ani,
   FMX.Layouts,
+  FMX.Media,
 
   FrameSplash;
 
@@ -52,12 +53,16 @@ type
     GameGridPanelLayout: TGridPanelLayout;
     Button_uncover_grid: TButton;
     Timer_game: TTimer;
+    MediaPlayer1: TMediaPlayer;
+    Music_fade_in: TFloatAnimation;
+    Timer_music: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button_uncover_gridClick(Sender: TObject);
     procedure Timer_gameTimer(Sender: TObject);
+    procedure Timer_musicTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,6 +97,7 @@ const
 var
   MainForm: TMainForm;
   game_running: boolean;
+  music_enabled:boolean;
   start_timestamp: TDateTime;
   mines:      array of array of boolean;
   hints:      array of array of integer;
@@ -206,6 +212,18 @@ begin
   TimeText.Text:= elapsed_minutes.ToString +':'+ elapsed_seconds.ToString;
 end;
 
+procedure TMainForm.Timer_musicTimer(Sender: TObject);
+begin
+  if not music_enabled then
+    begin
+      Timer_music.Enabled:= false;
+      exit;
+    end;
+
+  if not (MediaPlayer1.State = TMediaState.Playing) then
+    MediaPlayer1.Play;
+end;
+
 procedure TMainForm.CreateGameElements;
 begin
   var index:= 0;
@@ -285,6 +303,10 @@ begin
     MainForm.Constraints.MinWidth := 310;
   {$ENDIF}
 
+  MediaPlayer1.Volume:= 0;
+  music_enabled:= true;
+  MainForm.Timer_music.enabled:= true;
+
   if DebugMode then
     Button_uncover_grid.Visible:= true;
 end;
@@ -296,7 +318,7 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  if DebugMode then exit;
+  //if DebugMode then exit;
 
   SplashRectangle.Visible := True;
   HomeRectangle.Visible   := False;

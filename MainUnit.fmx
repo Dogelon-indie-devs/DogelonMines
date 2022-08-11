@@ -999,4 +999,22 @@ object MainForm: TMainForm
     Left = 258
     Top = 503
   end
+  object MediaPlayer1: TMediaPlayer
+    FileName = 'Enigma cut.mp3'
+    Left = 26
+    Top = 503
+    object Music_fade_in: TFloatAnimation
+      AnimationType = Out
+      Duration = 5.000000000000000000
+      PropertyName = 'volume'
+      StartValue = 0.000000000000000000
+      StopValue = 0.800000011920929000
+    end
+  end
+  object Timer_music: TTimer
+    Interval = 33
+    OnTimer = Timer_musicTimer
+    Left = 258
+    Top = 441
+  end
 end
