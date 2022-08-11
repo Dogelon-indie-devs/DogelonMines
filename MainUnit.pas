@@ -64,6 +64,7 @@ type
     procedure Visualize_in_grid;
     procedure CreateGameElements;
     procedure DestroyGameElements;
+    procedure TileClick(Sender: TObject);
     var SplashFrame : TSplashFrame;
   end;
 
@@ -141,8 +142,16 @@ begin
     end;
 end;
 
+procedure TMainForm.TileClick(Sender: TObject);
+begin
+  with Sender AS TRectangle do
+    ShowMessage('TRectangle ID: '+tag.ToString);
+end;
+
 procedure TMainForm.CreateGameElements;
 begin
+  var index:= 0;
+
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
     begin
@@ -161,6 +170,9 @@ begin
       GameArray[X,Y].Background.Margins.Bottom := 3;
       GameArray[X,Y].Background.Cursor := crHandPoint;
       GameArray[X,Y].Background.HitTest := True;
+
+      GameArray[X,Y].Background.Tag:= index;
+      GameArray[X,Y].Background.OnClick := TileClick;
 
       GameArray[X,Y].MineImage := TImage.Create(GameArray[X,Y].Background);
       GameArray[X,Y].MineImage.Parent := GameArray[X,Y].Background;
@@ -191,6 +203,7 @@ begin
       GameArray[X,Y].ColorAnimation.TriggerInverse := 'IsMouseOver=false';
 
       GameGridPanelLayout.AddObject(GameArray[X,Y].Background);
+      inc(index);
     end;
 end;
 
