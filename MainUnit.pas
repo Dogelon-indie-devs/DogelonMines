@@ -181,6 +181,7 @@ begin
   GameArray[X,Y].HintText.TextSettings.FontColor:= Hint_color(mines_around_tile);
   GameArray[X,Y].HintText.Text := mines_around_tile.ToString;
   GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
+  uncovered[x,y]:= true;
 end;
 
 procedure TMainForm.Button_uncover_gridClick(Sender: TObject);
@@ -225,7 +226,9 @@ begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
     begin
+      uncovered[x,y]:= false;
       mines[x,y]:= false;
+      flags[x,y]:= false;
       hints[x,y]:= 0;
     end;
 end;
