@@ -29,7 +29,7 @@ object MainForm: TMainForm
       Position.X = 10.000000000000000000
       Position.Y = 10.000000000000000000
       Size.Width = 312.000000000000000000
-      Size.Height = 57.000000000000000000
+      Size.Height = 55.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       XRadius = 13.000000000000000000
@@ -44,7 +44,7 @@ object MainForm: TMainForm
         Position.X = 10.000000000000000000
         Position.Y = 10.000000000000000000
         Size.Width = 101.000000000000000000
-        Size.Height = 37.000000000000000000
+        Size.Height = 35.000000000000000000
         Size.PlatformDefault = False
         Stroke.Kind = None
         XRadius = 12.000000000000000000
@@ -59,7 +59,7 @@ object MainForm: TMainForm
         object ScoreText: TText
           Align = Client
           Size.Width = 101.000000000000000000
-          Size.Height = 37.000000000000000000
+          Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
           Text = '0'
           TextSettings.Font.Family = 'Roboto'
@@ -77,7 +77,7 @@ object MainForm: TMainForm
         Position.X = 201.000000000000000000
         Position.Y = 10.000000000000000000
         Size.Width = 101.000000000000000000
-        Size.Height = 37.000000000000000000
+        Size.Height = 35.000000000000000000
         Size.PlatformDefault = False
         Stroke.Kind = None
         XRadius = 12.000000000000000000
@@ -92,7 +92,7 @@ object MainForm: TMainForm
         object TimeText: TText
           Align = Client
           Size.Width = 101.000000000000000000
-          Size.Height = 37.000000000000000000
+          Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
           Text = '0:00'
           TextSettings.Font.Family = 'Roboto'
@@ -761,10 +761,10 @@ object MainForm: TMainForm
     object CenterRectangle: TRectangle
       Align = Client
       Fill.Color = claWhite
-      Margins.Top = 20.000000000000000000
+      Margins.Top = 10.000000000000000000
       Margins.Bottom = 20.000000000000000000
       Size.Width = 332.000000000000000000
-      Size.Height = 372.000000000000000000
+      Size.Height = 384.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       object GameGridPanelLayout: TGridPanelLayout
@@ -774,7 +774,7 @@ object MainForm: TMainForm
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 10.000000000000000000
         Size.Width = 312.000000000000000000
-        Size.Height = 352.000000000000000000
+        Size.Height = 315.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         ColumnCollection = <
@@ -9355,7 +9355,7 @@ object MainForm: TMainForm
         HitTest = False
         Opacity = 0.000000000000000000
         Size.Width = 332.000000000000000000
-        Size.Height = 372.000000000000000000
+        Size.Height = 335.000000000000000000
         Size.PlatformDefault = False
         object FloatAnimation_explosion: TFloatAnimation
           Duration = 0.500000000000000000
@@ -9385,6 +9385,68 @@ object MainForm: TMainForm
             Softness = 0.300000011920929000
             Opacity = 1.000000000000000000
             ShadowColor = claBlack
+          end
+        end
+      end
+      object Rectangle_controls: TRectangle
+        Align = Top
+        Fill.Color = claWhite
+        Size.Width = 332.000000000000000000
+        Size.Height = 49.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        object Rectangle_uncover_tiles: TRectangle
+          Align = Left
+          Fill.Color = claGold
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 150.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+          XRadius = 12.000000000000000000
+          YRadius = 12.000000000000000000
+          OnClick = Rectangle_uncover_tilesClick
+          object Text1: TText
+            Align = Client
+            HitTest = False
+            Scale.X = 2.000000000000000000
+            Scale.Y = 2.000000000000000000
+            Size.Width = 75.000000000000000000
+            Size.Height = 24.500000000000000000
+            Size.PlatformDefault = False
+            Text = #55357#56589
+            TextSettings.Font.Family = 'Roboto'
+            TextSettings.Font.Size = 14.000000000000000000
+            TextSettings.FontColor = xFF111422
+          end
+        end
+        object Rectangle_flag_tiles: TRectangle
+          Align = Right
+          Fill.Color = claLightgray
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 172.000000000000000000
+          Size.Width = 150.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+          XRadius = 12.000000000000000000
+          YRadius = 12.000000000000000000
+          OnClick = Rectangle_flag_tilesClick
+          object Text2: TText
+            Align = Client
+            HitTest = False
+            Scale.X = 2.000000000000000000
+            Scale.Y = 2.000000000000000000
+            Size.Width = 75.000000000000000000
+            Size.Height = 24.500000000000000000
+            Size.PlatformDefault = False
+            Text = #55357#57001
+            TextSettings.Font.Family = 'Roboto'
+            TextSettings.Font.Size = 14.000000000000000000
+            TextSettings.FontColor = xFF111422
           end
         end
       end
@@ -9442,14 +9504,15 @@ object MainForm: TMainForm
           ShadowColor = claBlack
         end
       end
-    end
-    object Button_uncover_grid: TButton
-      Position.X = 16.000000000000000000
-      Position.Y = 464.000000000000000000
-      TabOrder = 0
-      Text = 'Uncover grid'
-      Visible = False
-      OnClick = Button_uncover_gridClick
+      object Button_uncover_grid: TButton
+        Position.Y = 8.000000000000000000
+        Size.Width = 70.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Uncover'
+        OnClick = Button_uncover_gridClick
+      end
     end
   end
   object SplashRectangle: TRectangle

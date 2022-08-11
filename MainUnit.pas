@@ -60,6 +60,11 @@ type
     FloatAnimation_explosion: TFloatAnimation;
     Label1: TLabel;
     ShadowEffect2: TShadowEffect;
+    Rectangle_controls: TRectangle;
+    Rectangle_uncover_tiles: TRectangle;
+    Text1: TText;
+    Rectangle_flag_tiles: TRectangle;
+    Text2: TText;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
@@ -68,6 +73,8 @@ type
     procedure Timer_gameTimer(Sender: TObject);
     procedure Timer_musicTimer(Sender: TObject);
     procedure FloatAnimation_explosionFinish(Sender: TObject);
+    procedure Rectangle_flag_tilesClick(Sender: TObject);
+    procedure Rectangle_uncover_tilesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,6 +88,7 @@ type
     procedure DestroyGameElements;
     function Stepped_on_a_mine(x, y: integer): boolean;
     procedure TileClick(Sender: TObject);
+    procedure Flag_tile(x,y:integer);
     procedure Initial_free_hint;
     var SplashFrame : TSplashFrame;
   end;
@@ -103,14 +111,33 @@ var
   MainForm: TMainForm;
   game_running: boolean;
   music_enabled:boolean;
+  uncovering_tiles: boolean;
   start_timestamp: TDateTime;
   mines:      array of array of boolean;
   hints:      array of array of integer;
+  flags:      array of array of boolean;
+  uncovered:  array of array of boolean;
   GameArray : array of array of TGameCaseRec;
 
 implementation
 
 {$R *.fmx}
+
+
+procedure TMainForm.Flag_tile(x,y:integer);
+begin
+  var tile_uncovered:= uncovered[x,y];
+  if tile_uncovered then exit;
+
+  var tile_flagged:= flags[x,y];
+  tile_flagged:= not tile_flagged;
+  flags[x,y]:= tile_flagged;
+
+  if tile_flagged then
+    GameArray[X,Y].HintText.Text := '🚩'
+  else
+    GameArray[X,Y].HintText.Text := '';
+end;
 
 procedure TMainForm.Uncover_tile(x,y:integer);
 
@@ -128,6 +155,11 @@ procedure TMainForm.Uncover_tile(x,y:integer);
   end;
 
 begin
+  var already_uncovered:= uncovered[x,y];
+  if already_uncovered then exit;
+
+  flags[x,y]:= false;
+
   var mine_on_tile:= mines[x,y];
   if mine_on_tile then
     begin
@@ -200,13 +232,19 @@ begin
 
   var x:= tile_index div 5;
   var y:= tile_index mod 5;
-  Uncover_tile(x,y);
 
-  if Stepped_on_a_mine(x,y) then
+  if uncovering_tiles then
     begin
-      game_running:= false;
-      FloatAnimation_explosion.Enabled:= true;
-    end;
+      Uncover_tile(x,y);
+
+      if Stepped_on_a_mine(x,y) then
+        begin
+          game_running:= false;
+          FloatAnimation_explosion.Enabled:= true;
+        end;
+    end
+  else
+      Flag_tile(x,y);
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
@@ -309,8 +347,11 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   SetLength(mines, desired_grid_size, desired_grid_size);
   SetLength(hints, desired_grid_size, desired_grid_size);
+  SetLength(uncovered,desired_grid_size, desired_grid_size);
+  SetLength(flags, desired_grid_size, desired_grid_size);
   SetLength(GameArray, desired_grid_size, desired_grid_size);
   CreateGameElements;
+  uncovering_tiles:= true;
 
   {$IFDEF MSWINDOWS}
   MainForm.Constraints.MinWidth := 310;
@@ -400,6 +441,16 @@ begin
   CreateGameElements;
   Game_start;
   PlayText.Text:= 'Restart';
+end;
+
+procedure TMainForm.Rectangle_flag_tilesClick(Sender: TObject);
+begin
+  uncovering_tiles:= false;
+end;
+
+procedure TMainForm.Rectangle_uncover_tilesClick(Sender: TObject);
+begin
+  uncovering_tiles:= true;
 end;
 
 procedure TMainForm.Generate_grid_values;
