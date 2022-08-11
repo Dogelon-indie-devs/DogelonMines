@@ -1000,7 +1000,7 @@ object MainForm: TMainForm
     Top = 503
   end
   object MediaPlayer1: TMediaPlayer
-    FileName = 'Enigma cut.mp3'
+    FileName = 'Luminous-loop.mp3'
     Left = 26
     Top = 503
     object Music_fade_in: TFloatAnimation

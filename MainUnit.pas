@@ -299,13 +299,19 @@ begin
   SetLength(hints, desired_grid_size, desired_grid_size);
   SetLength(GameArray, desired_grid_size, desired_grid_size);
   CreateGameElements;
-  {$IFDEF MSWINDOWS}
-    MainForm.Constraints.MinWidth := 310;
-  {$ENDIF}
 
-  MediaPlayer1.Volume:= 0;
-  music_enabled:= true;
-  MainForm.Timer_music.enabled:= true;
+  {$IFDEF MSWINDOWS}
+  MainForm.Constraints.MinWidth := 310;
+
+  music_enabled:= false;  // switch to true to enable music system
+  var music_in_folder:= FileExists('Luminous-loop.mp3');
+  if music_in_folder AND music_enabled then
+    begin
+      MediaPlayer1.Volume:= 0;
+      MainForm.Timer_music.enabled:= true;
+      MainForm.Music_fade_in.Enabled:= true;
+    end;
+  {$ENDIF}
 
   if DebugMode then
     Button_uncover_grid.Visible:= true;

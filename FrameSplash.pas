@@ -49,9 +49,6 @@ begin
 
   MainForm.HomeRectangle.Visible := True;
   MainForm.SplashRectangle.Visible := False;
-
-  MainForm.MediaPlayer1.Play;
-  MainForm.Music_fade_in.Enabled:= true;
 end;
 
 end.
