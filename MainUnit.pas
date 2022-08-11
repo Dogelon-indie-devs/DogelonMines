@@ -83,6 +83,7 @@ type
     procedure Place_hints;
     procedure Game_start;
     procedure Clean_up;
+    procedure Update_score;
     procedure Uncover_tile(x,y:integer);
     procedure Cascade_uncovering_tiles;
     procedure CreateGameElements;
@@ -106,13 +107,15 @@ type
    End;
 
 const
-  mines_in_the_grid = 5;
+  mines_in_the_grid = 3;
   desired_grid_size = 5;
   grid_size = desired_grid_size - 1;
   DebugMode = {$IFDEF DEBUG}True{$ELSE}False{$ENDIF};
 
 var
   MainForm: TMainForm;
+  level: integer;
+  score: integer;
   game_running: boolean;
   music_enabled:boolean;
   uncovering_tiles: boolean;
@@ -224,6 +227,8 @@ begin
   GameArray[X,Y].HintText.Text := mines_around_tile.ToString;
   GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
   uncovered[x,y]:= true;
+
+  inc(score,1);
 
   var no_mines_around:= hints[x,y] = 0;
   if no_mines_around then
@@ -348,9 +353,18 @@ begin
 
   if Check_win then
     begin
-      game_running:= false;
-      ShowMessage('WIN');
+      inc(score,mines_in_the_grid*10);
+      inc(level);
+      PlayRectangle.tag:= 1;
+      PlayText.Text:= 'Next level';
     end;
+
+  Update_score;
+end;
+
+procedure TMainForm.Update_score;
+begin
+  ScoreText.Text:= score.ToString;
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
@@ -456,6 +470,8 @@ begin
   SetLength(GameArray, desired_grid_size, desired_grid_size);
   CreateGameElements;
   uncovering_tiles:= true;
+  level:= 1;
+  score:= 0;
 
   {$IFDEF MSWINDOWS}
   MainForm.Constraints.MinWidth := 310;
@@ -537,6 +553,15 @@ begin
   Clean_up;
   CreateGameElements;
   Game_start;
+
+  var reset_scores:= PlayRectangle.tag = 0;
+  if reset_scores then
+    begin
+      level:= 1;
+      score:= 0;
+      Update_score;
+    end;
+  PlayRectangle.tag := 0;
   PlayText.Text:= 'Restart';
 end;
 

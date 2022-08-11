@@ -61,7 +61,7 @@ object MainForm: TMainForm
           Size.Width = 101.000000000000000000
           Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
-          Text = '0'
+          Text = 'score'
           TextSettings.Font.Family = 'Roboto'
           TextSettings.Font.Size = 14.000000000000000000
           TextSettings.FontColor = xFF111422
@@ -94,7 +94,7 @@ object MainForm: TMainForm
           Size.Width = 101.000000000000000000
           Size.Height = 35.000000000000000000
           Size.PlatformDefault = False
-          Text = '0:00'
+          Text = 'time'
           TextSettings.Font.Family = 'Roboto'
           TextSettings.Font.Size = 14.000000000000000000
           TextSettings.FontColor = xFF111422
