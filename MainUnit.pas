@@ -92,6 +92,20 @@ implementation
 {$R *.fmx}
 
 procedure TMainForm.Visualize_in_grid;
+
+  function Hint_color(mines_around_tile:integer):TAlphaColor;
+  begin
+    case mines_around_tile of
+    0: result:= TAlphaColors.Gray;
+    1: result:= TAlphaColors.Blue;
+    2: result:= TAlphaColors.Green;
+    3: result:= TAlphaColors.Red;
+    4: result:= TAlphaColors.Darkblue;
+    5: result:= TAlphaColors.Darkred;
+    else result:= TAlphaColors.Black;
+    end;
+  end;
+
 begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
@@ -110,7 +124,9 @@ begin
         end;
 
     //  StringGrid1.Cells[y,x]:= hints[x,y].ToString;
-        GameArray[X,Y].HintText.Text := hints[x,y].ToString;
+        var mines_around_tile:= hints[x,y];
+        GameArray[X,Y].HintText.TextSettings.FontColor:= Hint_color(mines_around_tile);
+        GameArray[X,Y].HintText.Text := mines_around_tile.ToString;
         GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
     end;
 end;
@@ -139,9 +155,10 @@ begin
       GameArray[X,Y].Background.Stroke.Thickness := 1;
       GameArray[X,Y].Background.XRadius := 12;
       GameArray[X,Y].Background.YRadius := 12;
-      GameArray[X,Y].Background.Margins.Left   := 1;
-      GameArray[X,Y].Background.Margins.Right  := 1;
-      GameArray[X,Y].Background.Margins.Bottom := 1;
+      GameArray[X,Y].Background.Margins.Top    := 3;
+      GameArray[X,Y].Background.Margins.Left   := 3;
+      GameArray[X,Y].Background.Margins.Right  := 3;
+      GameArray[X,Y].Background.Margins.Bottom := 3;
       GameArray[X,Y].Background.Cursor := crHandPoint;
       GameArray[X,Y].Background.HitTest := True;
 
