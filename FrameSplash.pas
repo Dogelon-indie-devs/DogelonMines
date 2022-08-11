@@ -33,7 +33,9 @@ uses MainUnit;
 
 procedure TSplashFrame.DogelonIndieDevsLabsImageFloatAnimationFinish(Sender: TObject);
 begin
-  Sleep(1000);
+  if not DebugMode then
+    Sleep(1000);
+
   MainForm.HomeRectangle.Visible   := True;
   MainForm.SplashRectangle.Visible := False;
 end;

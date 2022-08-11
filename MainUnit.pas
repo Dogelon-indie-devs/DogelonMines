@@ -9,6 +9,7 @@ uses
   System.Classes,
   System.Variants,
   System.Rtti,
+
   FMX.Types,
   FMX.Graphics,
   FMX.Controls,
@@ -20,7 +21,12 @@ uses
   FMX.Grid,
   FMX.ScrollBox,
   FMX.Objects,
-  FrameSplash, FMX.Effects, FMX.Filter.Effects, FMX.Ani, FMX.Layouts;
+  FMX.Effects,
+  FMX.Filter.Effects,
+  FMX.Ani,
+  FMX.Layouts,
+
+  FrameSplash;
 
 type
   TMainForm = class(TForm)
@@ -93,9 +99,13 @@ begin
       var mine_on_tile:= mines[x,y];
       if mine_on_tile then
         begin
-      //    StringGrid1.Cells[y,x]:= '💣';
-            GameArray[X,Y].MineImage.Bitmap.Assign(MineImage.Bitmap);
-            GameArray[X,Y].HintText.Text    := '';
+      //  StringGrid1.Cells[y,x]:= '💣';
+          GameArray[X,Y].MineImage.Bitmap.Assign(MineImage.Bitmap);
+          GameArray[X,Y].MineImage.Margins.Top    := 10;
+          GameArray[X,Y].MineImage.Margins.Left   := 10;
+          GameArray[X,Y].MineImage.Margins.Right  := 10;
+          GameArray[X,Y].MineImage.Margins.Bottom := 10;
+          GameArray[X,Y].HintText.Text    := '';
           continue;
         end;
 
@@ -163,7 +173,7 @@ begin
       GameArray[X,Y].ColorAnimation.Trigger := 'IsMouseOver=true';
       GameArray[X,Y].ColorAnimation.TriggerInverse := 'IsMouseOver=false';
 
-      GameGridPanelLayout.AddObject(GameArray[X,Y].Background)
+      GameGridPanelLayout.AddObject(GameArray[X,Y].Background);
     end;
 end;
 
