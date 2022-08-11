@@ -1,4 +1,4 @@
-﻿unit Unit1;
+﻿unit MainUnit;
 
 interface
 
@@ -8,17 +8,22 @@ uses
   System.UITypes,
   System.Classes,
   System.Variants,
+  System.Rtti,
   FMX.Types,
   FMX.Graphics,
   FMX.Controls,
   FMX.Forms,
   FMX.Dialogs,
   FMX.StdCtrls,
-  FMX.Controls.Presentation, System.Rtti, FMX.Grid.Style, FMX.Grid,
-  FMX.ScrollBox;
+  FMX.Controls.Presentation,
+  FMX.Grid.Style,
+  FMX.Grid,
+  FMX.ScrollBox,
+  FMX.Objects,
+  FrameSplash;
 
 type
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     Header: TToolBar;
     Footer: TToolBar;
     HeaderLabel: TLabel;
@@ -30,8 +35,12 @@ type
     StringColumn3: TStringColumn;
     StringColumn4: TStringColumn;
     StringColumn5: TStringColumn;
+    HomeRectangle: TRectangle;
+    SplashRectangle: TRectangle;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,6 +50,7 @@ type
     procedure Game_start;
     procedure Clean_up;
     procedure Visualize_in_grid;
+    var SplashFrame : TSplashFrame;
   end;
 
 const
@@ -49,7 +59,7 @@ const
   DebugMode = {$IFDEF DEBUG}True{$ELSE}False{$ENDIF};
 
 var
-  Form1: TForm1;
+  MainForm: TMainForm;
   mines: array of array of boolean;
   hints: array of array of integer;
   start_timestamp: TDateTime;
@@ -58,7 +68,7 @@ implementation
 
 {$R *.fmx}
 
-procedure TForm1.Visualize_in_grid;
+procedure TMainForm.Visualize_in_grid;
 begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
@@ -74,14 +84,14 @@ begin
     end;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TMainForm.Button1Click(Sender: TObject);
 begin
   Clean_up;
   Game_start;
   Visualize_in_grid;
 end;
 
-procedure TForm1.Clean_up;
+procedure TMainForm.Clean_up;
 begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
@@ -91,13 +101,29 @@ begin
     end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
   SetLength(mines, desired_grid_size, desired_grid_size);
   SetLength(hints, desired_grid_size, desired_grid_size);
 end;
 
-procedure TForm1.Game_start;
+procedure TMainForm.FormDestroy(Sender: TObject);
+begin
+  SplashFrame.Free;
+end;
+
+procedure TMainForm.FormShow(Sender: TObject);
+begin
+  SplashRectangle.Visible := True;
+  HomeRectangle.Visible   := False;
+  var SplashFrame := TSplashFrame.Create(SplashRectangle);
+      SplashFrame.Parent := SplashRectangle;
+      SplashFrame.Align  := TAlignLayout.Client;
+      SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
+      SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
+end;
+
+procedure TMainForm.Game_start;
 begin
   Generate_grid_values;
   Place_hints;
@@ -105,7 +131,7 @@ begin
   start_timestamp:= Now;
 end;
 
-procedure TForm1.Place_hints;
+procedure TMainForm.Place_hints;
 
   function Tile_exists(x,y:integer):boolean;
   begin
@@ -138,7 +164,7 @@ begin
     hints[x,y]:= Count_mines_around_tile(x,y);
 end;
 
-procedure TForm1.Generate_grid_values;
+procedure TMainForm.Generate_grid_values;
 begin
   randomize;
   var mines_to_distribute:= 6;

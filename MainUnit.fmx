@@ -1,0 +1,109 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'DogelonMines'
+  ClientHeight = 601
+  ClientWidth = 348
+  Position = DesktopCenter
+  FormFactor.Width = 1440
+  FormFactor.Height = 900
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object HomeRectangle: TRectangle
+    Align = Client
+    Fill.Color = claWhite
+    Size.Width = 348.000000000000000000
+    Size.Height = 601.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object Button1: TButton
+      Position.X = 128.000000000000000000
+      Position.Y = 392.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 33.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Generate'
+      OnClick = Button1Click
+    end
+    object Footer: TToolBar
+      Align = Bottom
+      Position.Y = 553.000000000000000000
+      Size.Width = 348.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'bottomtoolbar'
+      TabOrder = 1
+      object Label1: TLabel
+        Align = Contents
+        Size.Width = 348.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'toollabel'
+        TextSettings.HorzAlign = Center
+        Text = 'Made for ELONgevity hackathon 2022'
+        TabOrder = 1
+      end
+    end
+    object Header: TToolBar
+      Size.Width = 348.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object HeaderLabel: TLabel
+        Align = Contents
+        Size.Width = 348.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'toollabel'
+        TextSettings.HorzAlign = Center
+        Text = 'Dogelon Mines concept'
+      end
+    end
+    object StringGrid1: TStringGrid
+      CanFocus = True
+      ClipChildren = True
+      Position.X = 40.000000000000000000
+      Position.Y = 104.000000000000000000
+      Size.Width = 265.000000000000000000
+      Size.Height = 265.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      StyledSettings = [Family, Size, FontColor]
+      TabOrder = 3
+      RowHeight = 50.000000000000000000
+      RowCount = 5
+      Options = [ColLines, RowLines, AutoDisplacement]
+      Viewport.Width = 261.000000000000000000
+      Viewport.Height = 261.000000000000000000
+      object StringColumn1: TStringColumn
+        Size.Width = 50.000000000000000000
+      end
+      object StringColumn2: TStringColumn
+        Size.Width = 50.000000000000000000
+      end
+      object StringColumn3: TStringColumn
+        Size.Width = 50.000000000000000000
+      end
+      object StringColumn4: TStringColumn
+        Size.Width = 50.000000000000000000
+      end
+      object StringColumn5: TStringColumn
+        Size.Width = 50.000000000000000000
+      end
+    end
+  end
+  object SplashRectangle: TRectangle
+    Align = Client
+    Fill.Color = claWhite
+    Size.Width = 348.000000000000000000
+    Size.Height = 601.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    Visible = False
+  end
+end
