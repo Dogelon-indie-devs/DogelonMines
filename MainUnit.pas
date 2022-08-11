@@ -9,6 +9,7 @@ uses
   System.Classes,
   System.Variants,
   System.Rtti,
+  DateUtils,
 
   FMX.Types,
   FMX.Graphics,
@@ -49,10 +50,14 @@ type
     TimeText: TText;
     MineImage: TImage;
     GameGridPanelLayout: TGridPanelLayout;
+    Button_uncover_grid: TButton;
+    Timer_game: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure Button_uncover_gridClick(Sender: TObject);
+    procedure Timer_gameTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,9 +66,10 @@ type
     procedure Place_hints;
     procedure Game_start;
     procedure Clean_up;
-    procedure Visualize_in_grid;
+    procedure Visualize_in_grid(x,y:integer);
     procedure CreateGameElements;
     procedure DestroyGameElements;
+    function Stepped_on_a_mine(x, y: integer): boolean;
     procedure TileClick(Sender: TObject);
     var SplashFrame : TSplashFrame;
   end;
@@ -83,16 +89,17 @@ const
 
 var
   MainForm: TMainForm;
-  mines: array of array of boolean;
-  hints: array of array of integer;
+  game_running: boolean;
   start_timestamp: TDateTime;
+  mines:      array of array of boolean;
+  hints:      array of array of integer;
   GameArray : array of array of TGameCaseRec;
 
 implementation
 
 {$R *.fmx}
 
-procedure TMainForm.Visualize_in_grid;
+procedure TMainForm.Visualize_in_grid(x,y:integer);
 
   function Hint_color(mines_around_tile:integer):TAlphaColor;
   begin
@@ -108,32 +115,37 @@ procedure TMainForm.Visualize_in_grid;
   end;
 
 begin
+  var mine_on_tile:= mines[x,y];
+  if mine_on_tile then
+    begin
+  //  StringGrid1.Cells[y,x]:= '💣';
+      GameArray[X,Y].MineImage.Bitmap.Assign(MineImage.Bitmap);
+      GameArray[X,Y].MineImage.Margins.Top    := 10;
+      GameArray[X,Y].MineImage.Margins.Left   := 10;
+      GameArray[X,Y].MineImage.Margins.Right  := 10;
+      GameArray[X,Y].MineImage.Margins.Bottom := 10;
+      GameArray[X,Y].HintText.Text    := '';
+      exit;
+    end;
+
+//StringGrid1.Cells[y,x]:= hints[x,y].ToString;
+  var mines_around_tile:= hints[x,y];
+  GameArray[X,Y].HintText.TextSettings.FontColor:= Hint_color(mines_around_tile);
+  GameArray[X,Y].HintText.Text := mines_around_tile.ToString;
+  GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
+end;
+
+procedure TMainForm.Button_uncover_gridClick(Sender: TObject);
+begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
-    begin
-      var mine_on_tile:= mines[x,y];
-      if mine_on_tile then
-        begin
-      //  StringGrid1.Cells[y,x]:= '💣';
-          GameArray[X,Y].MineImage.Bitmap.Assign(MineImage.Bitmap);
-          GameArray[X,Y].MineImage.Margins.Top    := 10;
-          GameArray[X,Y].MineImage.Margins.Left   := 10;
-          GameArray[X,Y].MineImage.Margins.Right  := 10;
-          GameArray[X,Y].MineImage.Margins.Bottom := 10;
-          GameArray[X,Y].HintText.Text    := '';
-          continue;
-        end;
-
-    //  StringGrid1.Cells[y,x]:= hints[x,y].ToString;
-        var mines_around_tile:= hints[x,y];
-        GameArray[X,Y].HintText.TextSettings.FontColor:= Hint_color(mines_around_tile);
-        GameArray[X,Y].HintText.Text := mines_around_tile.ToString;
-        GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
-    end;
+    Visualize_in_grid(x,y);
 end;
 
 procedure TMainForm.Clean_up;
 begin
+  DestroyGameElements;
+
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
     begin
@@ -142,10 +154,30 @@ begin
     end;
 end;
 
-procedure TMainForm.TileClick(Sender: TObject);
+function TMainForm.Stepped_on_a_mine(x, y: integer): boolean;
 begin
+  result:= mines[x,y];
+end;
+
+procedure TMainForm.TileClick(Sender: TObject);
+var tile_index: integer;
+begin
+  if not game_running then exit;
+
   with Sender AS TRectangle do
-    ShowMessage('TRectangle ID: '+tag.ToString);
+    tile_index:= tag;
+
+  var x:= tile_index div 5;
+  var y:= tile_index mod 5;
+  Visualize_in_grid(x,y);
+end;
+
+procedure TMainForm.Timer_gameTimer(Sender: TObject);
+begin
+  var elapsed_seconds:= SecondsBetween(Now,start_timestamp);
+  var elapsed_minutes:= MinutesBetween(Now,start_timestamp);
+
+  TimeText.Text:= elapsed_minutes.ToString +':'+ elapsed_seconds.ToString;
 end;
 
 procedure TMainForm.CreateGameElements;
@@ -226,6 +258,9 @@ begin
   {$IFDEF MSWINDOWS}
     MainForm.Constraints.MinWidth := 310;
   {$ENDIF}
+
+  if DebugMode then
+    Button_uncover_grid.Visible:= true;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -251,6 +286,8 @@ begin
   Place_hints;
 
   start_timestamp:= Now;
+  game_running:= true;
+  Timer_game.Enabled:= true;
 end;
 
 procedure TMainForm.Place_hints;
@@ -289,8 +326,8 @@ end;
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
 begin
   Clean_up;
+  CreateGameElements;
   Game_start;
-  Visualize_in_grid;
 end;
 
 procedure TMainForm.Generate_grid_values;
