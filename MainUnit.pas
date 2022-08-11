@@ -84,6 +84,7 @@ type
     procedure Game_start;
     procedure Clean_up;
     procedure Uncover_tile(x,y:integer);
+    procedure Cascade_uncovering_tiles;
     procedure CreateGameElements;
     procedure DestroyGameElements;
     function Stepped_on_a_mine(x, y: integer): boolean;
@@ -142,6 +143,47 @@ begin
     GameArray[X,Y].HintText.Text := '';
 end;
 
+function Tile_exists(x,y:integer):boolean;
+begin
+  var x_coords_valid:= (x>=0) AND (x<=grid_size);
+  var y_coords_valid:= (y>=0) AND (y<=grid_size);
+  result:= x_coords_valid AND y_coords_valid;
+end;
+
+procedure TMainForm.Cascade_uncovering_tiles;
+
+  procedure Cascade_around_tile(x_origin,y_origin: integer);
+  begin
+    for var x := x_origin-1 to x_origin+1 do
+    for var y := y_origin-1 to y_origin+1 do
+      begin
+        if not Tile_exists(x,y) then continue;
+        Uncover_tile(x,y);
+      end;
+  end;
+
+begin
+  var previous_covered_tile_count: integer;
+  var no_action_during_cycle: boolean;
+
+  repeat
+    previous_covered_tile_count:= Count_remaining_covered_tiles;
+    for var x := 0 to grid_size do
+    for var y := 0 to grid_size do
+      begin
+        var tile_still_covered:= uncovered[x,y]=false;
+        if tile_still_covered then continue;
+        var hint_showing_zero:= hints[x,y]=0;
+        if not hint_showing_zero then continue;
+
+        Cascade_around_tile(x,y);
+      end;
+
+    no_action_during_cycle:= previous_covered_tile_count = Count_remaining_covered_tiles;
+
+  until no_action_during_cycle;
+end;
+
 procedure TMainForm.Uncover_tile(x,y:integer);
 
   function Hint_color(mines_around_tile:integer):TAlphaColor;
@@ -182,6 +224,10 @@ begin
   GameArray[X,Y].HintText.Text := mines_around_tile.ToString;
   GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
   uncovered[x,y]:= true;
+
+  var no_mines_around:= hints[x,y] = 0;
+  if no_mines_around then
+    Cascade_uncovering_tiles;
 end;
 
 procedure TMainForm.Button_uncover_gridClick(Sender: TObject);
@@ -195,6 +241,20 @@ procedure TMainForm.Initial_free_hint;
 begin
   randomize;
   var found_safe_spot:= false;
+
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      var unsafe_spot:= mines[x,y];
+      if unsafe_spot then continue;
+      var contains_hint_showing_zero:= hints[x,y] = 0;
+      if not contains_hint_showing_zero then continue;
+
+      GameArray[X,Y].HintText.TextSettings.FontColor:= TAlphaColors.Green;
+      GameArray[X,Y].HintText.Text := 'SAFE';  // ✓
+      found_safe_spot:= true;
+      exit;
+    end;
 
   while not found_safe_spot do
     begin
@@ -447,13 +507,6 @@ begin
 end;
 
 procedure TMainForm.Place_hints;
-
-  function Tile_exists(x,y:integer):boolean;
-  begin
-    var x_coords_valid:= (x>=0) AND (x<=grid_size);
-    var y_coords_valid:= (y>=0) AND (y<=grid_size);
-    result:= x_coords_valid AND y_coords_valid;
-  end;
 
   function Count_mines_around_tile(x_origin,y_origin:integer):integer;
   begin
