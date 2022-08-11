@@ -66,11 +66,12 @@ type
     procedure Place_hints;
     procedure Game_start;
     procedure Clean_up;
-    procedure Visualize_in_grid(x,y:integer);
+    procedure Uncover_tile(x,y:integer);
     procedure CreateGameElements;
     procedure DestroyGameElements;
     function Stepped_on_a_mine(x, y: integer): boolean;
     procedure TileClick(Sender: TObject);
+    procedure Initial_free_hint;
     var SplashFrame : TSplashFrame;
   end;
 
@@ -83,6 +84,7 @@ type
    End;
 
 const
+  mines_in_the_grid = 5;
   desired_grid_size = 5;
   grid_size = desired_grid_size - 1;
   DebugMode = {$IFDEF DEBUG}True{$ELSE}False{$ENDIF};
@@ -99,7 +101,7 @@ implementation
 
 {$R *.fmx}
 
-procedure TMainForm.Visualize_in_grid(x,y:integer);
+procedure TMainForm.Uncover_tile(x,y:integer);
 
   function Hint_color(mines_around_tile:integer):TAlphaColor;
   begin
@@ -139,7 +141,24 @@ procedure TMainForm.Button_uncover_gridClick(Sender: TObject);
 begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
-    Visualize_in_grid(x,y);
+    Uncover_tile(x,y);
+end;
+
+procedure TMainForm.Initial_free_hint;
+begin
+  randomize;
+  var found_safe_spot:= false;
+
+  while not found_safe_spot do
+    begin
+      var x:= random(desired_grid_size);
+      var y:= random(desired_grid_size);
+      var unsafe_spot:= mines[x,y];
+      if unsafe_spot then continue;
+
+      GameArray[X,Y].HintText.Text := 'SAFE';
+      found_safe_spot:= true;
+    end;
 end;
 
 procedure TMainForm.Clean_up;
@@ -169,7 +188,13 @@ begin
 
   var x:= tile_index div 5;
   var y:= tile_index mod 5;
-  Visualize_in_grid(x,y);
+  Uncover_tile(x,y);
+
+  if Stepped_on_a_mine(x,y) then
+    begin
+      game_running:= false;
+
+    end;
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
@@ -284,6 +309,7 @@ procedure TMainForm.Game_start;
 begin
   Generate_grid_values;
   Place_hints;
+  Initial_free_hint;
 
   start_timestamp:= Now;
   game_running:= true;
@@ -328,12 +354,13 @@ begin
   Clean_up;
   CreateGameElements;
   Game_start;
+  PlayText.Text:= 'Restart';
 end;
 
 procedure TMainForm.Generate_grid_values;
 begin
   randomize;
-  var mines_to_distribute:= 6;
+  var mines_to_distribute:= mines_in_the_grid;
 
   while mines_to_distribute>0 do
     begin
