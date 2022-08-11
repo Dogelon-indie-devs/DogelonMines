@@ -20,26 +20,32 @@ uses
   FMX.Grid,
   FMX.ScrollBox,
   FMX.Objects,
-  FrameSplash;
+  FrameSplash, FMX.Effects, FMX.Filter.Effects, FMX.Ani, FMX.Layouts;
 
 type
   TMainForm = class(TForm)
-    Header: TToolBar;
-    Footer: TToolBar;
-    HeaderLabel: TLabel;
-    Label1: TLabel;
-    Button1: TButton;
-    StringGrid1: TStringGrid;
-    StringColumn1: TStringColumn;
-    StringColumn2: TStringColumn;
-    StringColumn3: TStringColumn;
-    StringColumn4: TStringColumn;
-    StringColumn5: TStringColumn;
     HomeRectangle: TRectangle;
     SplashRectangle: TRectangle;
-    procedure Button1Click(Sender: TObject);
+    TopRectangle: TRectangle;
+    CenterRectangle: TRectangle;
+    BottomRectangle: TRectangle;
+    ScoreRectangle: TRectangle;
+    ScoreShadowEffect: TShadowEffect;
+    TimeRectangle: TRectangle;
+    ShadowEffect1: TShadowEffect;
+    DogelonImage: TImage;
+    PlayRectangle: TRectangle;
+    PlayText: TText;
+    PlayColorAnimation: TColorAnimation;
+    PlayShadowEffect: TShadowEffect;
+    DogelonImageFloatAnimation: TFloatAnimation;
+    ScoreText: TText;
+    TimeText: TText;
+    MineImage: TImage;
+    GameGridPanelLayout: TGridPanelLayout;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure PlayRectangleClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
@@ -50,8 +56,18 @@ type
     procedure Game_start;
     procedure Clean_up;
     procedure Visualize_in_grid;
+    procedure CreateGameElements;
+    procedure DestroyGameElements;
     var SplashFrame : TSplashFrame;
   end;
+
+ type
+   TGameCaseRec = Record
+     MineImage      : TImage;
+     HintText       : TText;
+     ColorAnimation : TColorAnimation;
+     Background     : TRectangle;
+   End;
 
 const
   desired_grid_size = 5;
@@ -63,6 +79,7 @@ var
   mines: array of array of boolean;
   hints: array of array of integer;
   start_timestamp: TDateTime;
+  GameArray : array of array of TGameCaseRec;
 
 implementation
 
@@ -76,19 +93,16 @@ begin
       var mine_on_tile:= mines[x,y];
       if mine_on_tile then
         begin
-          StringGrid1.Cells[y,x]:= '💣';
+      //    StringGrid1.Cells[y,x]:= '💣';
+            GameArray[X,Y].MineImage.Bitmap.Assign(MineImage.Bitmap);
+            GameArray[X,Y].HintText.Text    := '';
           continue;
         end;
 
-      StringGrid1.Cells[y,x]:= hints[x,y].ToString;
+    //  StringGrid1.Cells[y,x]:= hints[x,y].ToString;
+        GameArray[X,Y].HintText.Text := hints[x,y].ToString;
+        GameArray[X,Y].MineImage.Bitmap.Assign(Nil);
     end;
-end;
-
-procedure TMainForm.Button1Click(Sender: TObject);
-begin
-  Clean_up;
-  Game_start;
-  Visualize_in_grid;
 end;
 
 procedure TMainForm.Clean_up;
@@ -101,15 +115,79 @@ begin
     end;
 end;
 
+procedure TMainForm.CreateGameElements;
+begin
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      GameArray[X,Y].Background := TRectangle.Create(Nil);
+      GameArray[X,Y].Background.Align := TAlignLayout.Client;
+      GameArray[X,Y].Background.Fill.Color := TAlphaColors.Alpha OR TAlphaColor($FDE25F);
+      GameArray[X,Y].Background.Fill.Kind  := TBrushKind.Solid;
+      GameArray[X,Y].Background.Stroke.Color := TAlphaColors.Black;
+      GameArray[X,Y].Background.Stroke.Kind  := TBrushKind.None;
+      GameArray[X,Y].Background.Stroke.Thickness := 1;
+      GameArray[X,Y].Background.XRadius := 12;
+      GameArray[X,Y].Background.YRadius := 12;
+      GameArray[X,Y].Background.Margins.Left   := 1;
+      GameArray[X,Y].Background.Margins.Right  := 1;
+      GameArray[X,Y].Background.Margins.Bottom := 1;
+      GameArray[X,Y].Background.Cursor := crHandPoint;
+      GameArray[X,Y].Background.HitTest := True;
+
+      GameArray[X,Y].MineImage := TImage.Create(GameArray[X,Y].Background);
+      GameArray[X,Y].MineImage.Parent := GameArray[X,Y].Background;
+      GameArray[X,Y].MineImage.Align  := TAlignLayout.Client;
+      GameArray[X,Y].MineImage.HitTest := False;
+
+      GameArray[X,Y].HintText  := TText.Create(GameArray[X,Y].Background);
+      GameArray[X,Y].HintText.Parent := GameArray[X,Y].Background;
+      GameArray[X,Y].HintText.Align  := TAlignLayout.Client;
+      GameArray[X,Y].HintText.TextSettings.FontColor := TAlphaColors.Alpha OR TAlphaColor($111422);
+      GameArray[X,Y].HintText.TextSettings.Font.Family := 'Roboto';
+      GameArray[X,Y].HintText.TextSettings.Font.Size := 20;
+      GameArray[X,Y].HintText.TextSettings.Font.Style := [TFontStyle.fsBold];
+      GameArray[X,Y].HintText.Text := '';
+      GameArray[X,Y].HintText.HitTest := False;
+
+      GameArray[X,Y].ColorAnimation := TColorAnimation.Create(GameArray[X,Y].Background);
+      GameArray[X,Y].ColorAnimation.Parent := GameArray[X,Y].Background;
+      GameArray[X,Y].ColorAnimation.Enabled := True;
+      GameArray[X,Y].ColorAnimation.Delay := 0;
+      GameArray[X,Y].ColorAnimation.Duration := 0.2;
+      GameArray[X,Y].ColorAnimation.Inverse := True;
+      GameArray[X,Y].ColorAnimation.Interpolation := TInterpolationType.Linear;
+      GameArray[X,Y].ColorAnimation.PropertyName := 'Fill.Color';
+      GameArray[X,Y].ColorAnimation.StartValue := TAlphaColors.Alpha OR TAlphaColor($FDE25F);
+      GameArray[X,Y].ColorAnimation.StopValue  := TAlphaColors.Alpha OR TAlphaColor($F9D527);
+      GameArray[X,Y].ColorAnimation.Trigger := 'IsMouseOver=true';
+      GameArray[X,Y].ColorAnimation.TriggerInverse := 'IsMouseOver=false';
+
+      GameGridPanelLayout.AddObject(GameArray[X,Y].Background)
+    end;
+end;
+
+procedure TMainForm.DestroyGameElements;
+begin
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      GameGridPanelLayout.RemoveObject(GameArray[X,Y].Background);
+      GameArray[X,Y].Background.Free;
+    end;
+end;
+
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   SetLength(mines, desired_grid_size, desired_grid_size);
   SetLength(hints, desired_grid_size, desired_grid_size);
+  SetLength(GameArray, desired_grid_size, desired_grid_size);
+  CreateGameElements;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
-  SplashFrame.Free;
+  DestroyGameElements;
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
@@ -121,6 +199,7 @@ begin
       SplashFrame.Align  := TAlignLayout.Client;
       SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
       SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
+  DogelonImageFloatAnimation.Enabled := True;
 end;
 
 procedure TMainForm.Game_start;
@@ -162,6 +241,13 @@ begin
   for var x := 0 to grid_size do
   for var y := 0 to grid_size do
     hints[x,y]:= Count_mines_around_tile(x,y);
+end;
+
+procedure TMainForm.PlayRectangleClick(Sender: TObject);
+begin
+  Clean_up;
+  Game_start;
+  Visualize_in_grid;
 end;
 
 procedure TMainForm.Generate_grid_values;
