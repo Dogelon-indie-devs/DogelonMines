@@ -95,6 +95,9 @@ type
     function Count_remaining_covered_tiles:integer;
     function Count_flagged_tiles: integer;
     function Check_win:boolean;
+
+    procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+
     var SplashFrame : TSplashFrame;
   end;
 
@@ -185,6 +188,23 @@ begin
     no_action_during_cycle:= previous_covered_tile_count = Count_remaining_covered_tiles;
 
   until no_action_during_cycle;
+end;
+
+procedure TMainForm.CaseMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Single);
+begin
+  {$IFDEF MSWINDOWS}
+  if Shift = [ssLeft] then uncovering_tiles := true;
+  if Shift = [ssRight] then
+    begin
+      uncovering_tiles := false;
+      TileClick(Sender);
+    end;
+  {$ENDIF}
+
+  {$IFDEF ANDROID}
+    // TODO
+  {$ENDIF}
 end;
 
 procedure TMainForm.Uncover_tile(x,y:integer);
@@ -409,6 +429,7 @@ begin
       GameArray[X,Y].Background.Margins.Bottom := 3;
       GameArray[X,Y].Background.Cursor := crHandPoint;
       GameArray[X,Y].Background.HitTest := True;
+      GameArray[X,Y].Background.OnMouseDown := CaseMouseDown;
 
       GameArray[X,Y].Background.Tag:= index;
       GameArray[X,Y].Background.OnClick := TileClick;
