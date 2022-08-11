@@ -90,6 +90,9 @@ type
     procedure TileClick(Sender: TObject);
     procedure Flag_tile(x,y:integer);
     procedure Initial_free_hint;
+    function Count_remaining_covered_tiles:integer;
+    function Count_flagged_tiles: integer;
+    function Check_win:boolean;
     var SplashFrame : TSplashFrame;
   end;
 
@@ -205,6 +208,16 @@ begin
     end;
 end;
 
+function TMainForm.Check_win: boolean;
+begin
+  var remaining_covers:= Count_remaining_covered_tiles;
+  var flagged_tiles:= Count_flagged_tiles;
+  var only_mines_remain_covered:= mines_in_the_grid = remaining_covers;
+  var all_mines_are_flagged:=     mines_in_the_grid = flagged_tiles;
+
+  result:= only_mines_remain_covered AND all_mines_are_flagged;
+end;
+
 procedure TMainForm.Clean_up;
 begin
   DestroyGameElements;
@@ -214,6 +227,30 @@ begin
     begin
       mines[x,y]:= false;
       hints[x,y]:= 0;
+    end;
+end;
+
+function TMainForm.Count_remaining_covered_tiles: integer;
+begin
+  result:= desired_grid_size * desired_grid_size;
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      var tile_uncovered:= uncovered[x,y];
+      if tile_uncovered then
+        dec(result);
+    end;
+end;
+
+function TMainForm.Count_flagged_tiles: integer;
+begin
+  result:= 0;
+  for var x := 0 to grid_size do
+  for var y := 0 to grid_size do
+    begin
+      var tile_flagged:= flags[x,y];
+      if tile_flagged then
+        inc(result);
     end;
 end;
 
@@ -245,6 +282,12 @@ begin
     end
   else
       Flag_tile(x,y);
+
+  if Check_win then
+    begin
+      game_running:= false;
+      ShowMessage('WIN');
+    end;
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
@@ -252,9 +295,7 @@ begin
   if not game_running then exit;
 
   var elapsed_seconds:= SecondsBetween(Now,start_timestamp);
-  var elapsed_minutes:= MinutesBetween(Now,start_timestamp);
-
-  TimeText.Text:= elapsed_minutes.ToString +':'+ elapsed_seconds.ToString;
+  TimeText.Text:= FormatDateTime('n:ss', elapsed_seconds / SecsPerDay);
 end;
 
 procedure TMainForm.Timer_musicTimer(Sender: TObject);
