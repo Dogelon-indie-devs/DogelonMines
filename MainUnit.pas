@@ -56,6 +56,10 @@ type
     MediaPlayer1: TMediaPlayer;
     Music_fade_in: TFloatAnimation;
     Timer_music: TTimer;
+    Image_gameover: TImage;
+    FloatAnimation_explosion: TFloatAnimation;
+    Label1: TLabel;
+    ShadowEffect2: TShadowEffect;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
@@ -63,6 +67,7 @@ type
     procedure Button_uncover_gridClick(Sender: TObject);
     procedure Timer_gameTimer(Sender: TObject);
     procedure Timer_musicTimer(Sender: TObject);
+    procedure FloatAnimation_explosionFinish(Sender: TObject);
   private
     { Private declarations }
   public
@@ -200,12 +205,14 @@ begin
   if Stepped_on_a_mine(x,y) then
     begin
       game_running:= false;
-
+      FloatAnimation_explosion.Enabled:= true;
     end;
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
 begin
+  if not game_running then exit;
+
   var elapsed_seconds:= SecondsBetween(Now,start_timestamp);
   var elapsed_minutes:= MinutesBetween(Now,start_timestamp);
 
@@ -293,6 +300,11 @@ begin
     end;
 end;
 
+procedure TMainForm.FloatAnimation_explosionFinish(Sender: TObject);
+begin
+  ShadowEffect2.UpdateParentEffects;
+end;
+
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   SetLength(mines, desired_grid_size, desired_grid_size);
@@ -324,7 +336,7 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  //if DebugMode then exit;
+  if DebugMode then exit;
 
   SplashRectangle.Visible := True;
   HomeRectangle.Visible   := False;
@@ -338,6 +350,8 @@ end;
 
 procedure TMainForm.Game_start;
 begin
+  FloatAnimation_explosion.Enabled:= false;
+  Image_gameover.Opacity:= 0;
   Generate_grid_values;
   Place_hints;
   Initial_free_hint;
