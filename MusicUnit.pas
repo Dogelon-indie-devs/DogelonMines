@@ -39,7 +39,6 @@ begin
   LoopTimer.Enabled  := False;
   LoopTimer.Interval := 30;
   LoopTimer.OnTimer  := OnLoopTimer;
-  IsLooping := False;
 end;
 
 destructor TMusicEngine.Destroy;
