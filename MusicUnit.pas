@@ -7,7 +7,8 @@ uses
   System.IOUtils,
   System.Types,
   System.SysUtils,
-  FMX.Types,  FMX.Forms,
+  FMX.Types,
+  FMX.Forms,
   FMX.Ani,
   FMX.Media;
 
@@ -89,7 +90,7 @@ begin
 
     {$IFDEF ANDROID}
     if LoopFile then
-      FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, LoopFileName + '.3gp')
+      FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'loop_tmp.3gp')
     else
       FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
     {$ENDIF}
