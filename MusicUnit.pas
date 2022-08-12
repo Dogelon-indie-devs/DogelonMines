@@ -14,13 +14,14 @@ uses
     TMusicEngine = class
       private
         FMusicToLoop : String;
-        LoopTimer   : TTimer;
-        MusicPlayer : TMediaPlayer;
+        LoopTimer    : TTimer;
+        MusicPlayer  : TMediaPlayer;
         function MusicIsPlaying : Boolean;
-        function ExtractMusicFromResource(ResourceID : String) : String;
+        function ExtractMusicFromResource(ResourceID : String; LoopFile : Boolean = False) : String;
         procedure OnLoopTimer(Sender: TObject);
       public
-        property MusicNameToLoop : String write FMusicToLoop;
+        procedure LoopMusic(ResourceID : String);
+
         procedure PlayMusic(ResourceID : String);
         procedure StopMusic;
         constructor Create;
@@ -47,22 +48,40 @@ begin
   inherited;
 end;
 
-function TMusicEngine.ExtractMusicFromResource(ResourceID: String): String;
+function TMusicEngine.ExtractMusicFromResource(ResourceID: String; LoopFile : Boolean = False): String;
 begin
   var ResStream := TResourceStream.Create(HInstance, ResourceID, RT_RCDATA);
   try
+    var FileName := '';
+
     {$IFDEF MSWINDOWS}
-    var FileName := System.SysUtils.GetCurrentDir + '\' + 'tmp.mp3';
+    if LoopFile then
+      FileName := System.SysUtils.GetCurrentDir + '\' + 'loop_tmp.mp3'
+    else
+      FileName := System.SysUtils.GetCurrentDir + '\' + 'tmp.mp3';
     {$ENDIF}
+
     {$IFDEF ANDROID}
-    var FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
+    if LoopFile then
+      FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, LoopFileName + '.3gp')
+    else
+      FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
     {$ENDIF}
+
     ResStream.Position := 0;
     ResStream.SaveToFile(FileName);
     Result := FileName;
   finally
     ResStream.Free;
   end;
+end;
+
+procedure TMusicEngine.LoopMusic(ResourceID: String);
+begin
+  MusicPlayer.Stop;
+  MusicPlayer.Clear;
+  FMusicToLoop := ResourceID;
+  LoopTimer.Enabled := True;
 end;
 
 function TMusicEngine.MusicIsPlaying: Boolean;
@@ -74,8 +93,15 @@ procedure TMusicEngine.OnLoopTimer(Sender: TObject);
 begin
   if Not MusicIsPlaying then
     begin
-      MusicPlayer.FileName := FMusicToLoop;
-      MusicPlayer.Play;
+      LoopTimer.Enabled := False;
+      try
+        MusicPlayer.Clear;
+        var FileName := ExtractMusicFromResource(FMusicToLoop, True);
+        MusicPlayer.FileName := FileName;
+        MusicPlayer.Play;
+      finally
+        loopTimer.Enabled := True;
+      end;
     end;
 end;
 
@@ -90,7 +116,7 @@ end;
 
 procedure TMusicEngine.StopMusic;
 begin
-  LoopTimer.Enabled := False;
+  // stop loop
   MusicPlayer.Stop;
   MusicPlayer.Clear;
 end;
