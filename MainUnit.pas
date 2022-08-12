@@ -61,9 +61,15 @@ type
     Timer_music: TTimer;
     Image_gameover: TImage;
     FloatAnimation_explosion: TFloatAnimation;
-    Label1: TLabel;
+    Label_gameover: TLabel;
     ShadowEffect2: TShadowEffect;
     GestureManager1: TGestureManager;
+    Background_scroll_anim: TFloatAnimation;
+    Image_background: TImage;
+    Button_advance_bg: TButton;
+    Label_level: TLabel;
+    ShadowEffect3: TShadowEffect;
+    Level_fadeout_anim: TFloatAnimation;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
@@ -73,6 +79,7 @@ type
     procedure FloatAnimation_explosionFinish(Sender: TObject);
     procedure Rectangle_flag_tilesClick(Sender: TObject);
     procedure Rectangle_uncover_tilesClick(Sender: TObject);
+    procedure Button_advance_bgClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -93,6 +100,7 @@ type
     function Count_remaining_covered_tiles:integer;
     function Count_flagged_tiles: integer;
     function Check_win:boolean;
+    procedure Scroll_background_to_next_level;
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     var SplashFrame : TSplashFrame;
@@ -263,6 +271,20 @@ begin
     Cascade_uncovering_tiles;
 end;
 
+procedure TMainForm.Scroll_background_to_next_level;
+begin
+  Background_scroll_anim.Enabled:= false;
+  var current_y_position:= Image_background.Position.Y;
+  const movement_distance_px = 112;
+  Background_scroll_anim.StopValue:= current_y_position + movement_distance_px;
+  Background_scroll_anim.Enabled:= true;
+end;
+
+procedure TMainForm.Button_advance_bgClick(Sender: TObject);
+begin
+  Scroll_background_to_next_level;
+end;
+
 procedure TMainForm.Button_uncover_gridClick(Sender: TObject);
 begin
   for var x := 0 to grid_size do
@@ -414,9 +436,9 @@ begin
       GameArray[X,Y].Background.Align := TAlignLayout.Client;
       GameArray[X,Y].Background.Fill.Color := TAlphaColors.Alpha OR TAlphaColor($FDE25F);
       GameArray[X,Y].Background.Fill.Kind  := TBrushKind.Solid;
-      GameArray[X,Y].Background.Stroke.Color := TAlphaColors.Black;
-      GameArray[X,Y].Background.Stroke.Kind  := TBrushKind.None;
-      GameArray[X,Y].Background.Stroke.Thickness := 1;
+      GameArray[X,Y].Background.Stroke.Color := TAlphaColors.Goldenrod;
+      GameArray[X,Y].Background.Stroke.Kind  := TBrushKind.Solid;
+      GameArray[X,Y].Background.Stroke.Thickness := 2;
       GameArray[X,Y].Background.XRadius := 12;
       GameArray[X,Y].Background.YRadius := 12;
       GameArray[X,Y].Background.Margins.Top    := 3;
@@ -535,10 +557,6 @@ begin
   Generate_grid_values;
   Place_hints;
   Initial_free_hint;
-
-  start_timestamp:= Now;
-  game_running:= true;
-  Timer_game.Enabled:= true;
 end;
 
 procedure TMainForm.Place_hints;
@@ -568,18 +586,39 @@ begin
 end;
 
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
+
+  procedure Display_current_level;
+  begin
+    Level_fadeout_anim.Enabled:= false;
+    Label_level.Opacity:= 1;
+    Label_level.Text:= 'LEVEL: '+level.ToString+'/30';
+    Level_fadeout_anim.Enabled:= true;
+  end;
+
 begin
+  var reset_game:= PlayRectangle.tag = 0;
+  if reset_game then
+    begin
+      Image_background.Position.Y:= -3400;
+      level:= 1;
+      score:= 0;
+      Update_score;
+
+      start_timestamp:= Now;
+      game_running:= true;
+      Timer_game.Enabled:= true;
+    end;
+
+  Display_current_level;
+
+  var proceed_to_next_level:= PlayRectangle.tag > 0;
+  if proceed_to_next_level then
+    Scroll_background_to_next_level;
+
   Clean_up;
   CreateGameElements;
   Game_start;
 
-  var reset_scores:= PlayRectangle.tag = 0;
-  if reset_scores then
-    begin
-      level:= 1;
-      score:= 0;
-      Update_score;
-    end;
   PlayRectangle.tag := 0;
   PlayText.Text:= 'Restart';
 end;
