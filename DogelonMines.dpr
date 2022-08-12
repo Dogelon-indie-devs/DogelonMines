@@ -6,7 +6,8 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   MainUnit in 'MainUnit.pas' {MainForm},
-  FrameSplash in 'FrameSplash.pas' {SplashFrame: TFrame};
+  FrameSplash in 'FrameSplash.pas' {SplashFrame: TFrame},
+  MusicUnit in 'MusicUnit.pas';
 
 {$R *.res}
 

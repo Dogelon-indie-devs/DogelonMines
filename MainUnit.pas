@@ -136,7 +136,7 @@ const
 
 {$R *.fmx}
 
-function TMainForm.ExtractAudioFromResource(ResourceID : String) : String;
+function TMainForm.ExtractAudioFromResource(ResourceID : String) : String; // Only For Android
 begin
   Result := '';
   var ResStream := TResourceStream.Create(HInstance, ResourceID, RT_RCDATA);

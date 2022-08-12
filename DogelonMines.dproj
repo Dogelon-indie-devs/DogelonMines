@@ -362,6 +362,7 @@
             <Form>SplashFrame</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="MusicUnit.pas"/>
         <RcItem Include="Audio\Luminous-loop.3gp">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>
