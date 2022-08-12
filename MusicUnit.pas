@@ -50,7 +50,9 @@ begin
   LoopTimer.OnTimer  := OnLoopTimer;
   MusicFadeIn := TFloatAnimation.Create(MusicPlayer);
   MusicFadeIn.Parent := MusicPlayer;
-  MusicFadeIn.Delay := 0;
+  {$IFDEF ANDROID}
+  MusicFadeIn.Delay := 4;
+  {$ENDIF}
   MusicFadeIn.Duration := 5;
   MusicFadeIn.Enabled  := False;
   MusicFadeIn.PropertyName := 'volume';
