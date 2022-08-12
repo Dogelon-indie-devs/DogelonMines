@@ -97,6 +97,7 @@ type
     function Count_remaining_covered_tiles:integer;
     function Count_flagged_tiles: integer;
     function Check_win:boolean;
+    procedure Reset_background_image;
     procedure Scroll_background_to_next_level;
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
@@ -125,6 +126,7 @@ var
   music_enabled:boolean;
   uncovering_tiles: boolean;
   start_timestamp: TDateTime;
+  bg_movement_distance_px: integer;
   mines:      array of array of boolean;
   hints:      array of array of integer;
   flags:      array of array of boolean;
@@ -272,8 +274,7 @@ procedure TMainForm.Scroll_background_to_next_level;
 begin
   Background_scroll_anim.Enabled:= false;
   var current_y_position:= Image_background.Position.Y;
-  const movement_distance_px = 112;
-  Background_scroll_anim.StopValue:= current_y_position + movement_distance_px;
+  Background_scroll_anim.StopValue:= current_y_position + bg_movement_distance_px;
   Background_scroll_anim.Enabled:= true;
 end;
 
@@ -521,6 +522,16 @@ begin
   ShadowEffect2.UpdateParentEffects;
 end;
 
+procedure TMainForm.Reset_background_image;
+begin
+  Image_background.Width:=  MainForm.Width;
+  Image_background.Height:= Image_background.Width *10;
+  const screen_height = MainForm.Height;
+  const image_height  = Image_background.Height;
+  Image_background.Position.Y:= 0 - image_height + screen_height;
+  bg_movement_distance_px:= round(abs(Image_background.Position.Y)/30);
+end;
+
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   SetLength(mines, desired_grid_size, desired_grid_size);
@@ -538,6 +549,8 @@ begin
   MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
   MusicEngine.EnableFadeIn;
   *)
+
+  Reset_background_image;
 
   {$IFDEF MSWINDOWS}
   Constraints.MinWidth := 310;
@@ -620,7 +633,7 @@ begin
   var reset_game:= PlayRectangle.tag = 0;
   if reset_game then
     begin
-      Image_background.Position.Y:= -3400;
+      Reset_background_image;
       level:= 1;
       score:= 0;
       Update_score;
