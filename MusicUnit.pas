@@ -5,7 +5,7 @@ interface
 uses
   System.Classes,
   System.IOUtils,
-  System.Types,
+  System.Types,    fmx.dialogs,
   System.SysUtils,
   FMX.Types,
   FMX.Media;
@@ -13,11 +13,14 @@ uses
   type
     TMusicEngine = class
       private
+        FMusicToLoop : String;
         LoopTimer   : TTimer;
         MusicPlayer : TMediaPlayer;
         function MusicIsPlaying : Boolean;
         function ExtractMusicFromResource(ResourceID : String) : String;
+        procedure OnLoopTimer(Sender: TObject);
       public
+        property MusicNameToLoop : String write FMusicToLoop;
         procedure PlayMusic(ResourceID : String);
         procedure StopMusic;
         constructor Create;
@@ -30,8 +33,11 @@ implementation
 
 constructor TMusicEngine.Create;
 begin
-  LoopTimer   := TTimer.Create(Nil);
   MusicPlayer := TMediaPlayer.Create(Nil);
+  LoopTimer   := TTimer.Create(Nil);
+  LoopTimer.Enabled  := False;
+  LoopTimer.Interval := 30;
+  LoopTimer.OnTimer  := OnLoopTimer;
 end;
 
 destructor TMusicEngine.Destroy;
@@ -64,16 +70,27 @@ begin
   Result := MusicPlayer.State = TMediaState.Playing;
 end;
 
+procedure TMusicEngine.OnLoopTimer(Sender: TObject);
+begin
+  if Not MusicIsPlaying then
+    begin
+      MusicPlayer.FileName := FMusicToLoop;
+      MusicPlayer.Play;
+    end;
+end;
+
 procedure TMusicEngine.PlayMusic(ResourceID : String);
 begin
   if MusicIsPlaying then StopMusic;
   var FileName := ExtractMusicFromResource(ResourceID);
   MusicPlayer.FileName := FileName;
   MusicPlayer.Play;
+  LoopTimer.Enabled := True;
 end;
 
 procedure TMusicEngine.StopMusic;
 begin
+  LoopTimer.Enabled := False;
   MusicPlayer.Stop;
   MusicPlayer.Clear;
 end;

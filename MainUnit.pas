@@ -511,7 +511,7 @@ begin
   score:= 0;
 
   MusicEngine := TMusicEngine.Create;
-
+      MusicEngine.PlayMusic(LOOP_SOUND_RESOURCE_ID_MP3);
   {$IFDEF MSWINDOWS}
   MainForm.Constraints.MinWidth := 310;
 
