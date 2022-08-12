@@ -498,8 +498,7 @@ begin
   score:= 0;
 
   MusicEngine := TMusicEngine.Create;
-  MusicEngine.MusicNameToLoop := WINS_SOUND_RESOURCE_ID_MP3;
-  MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_MP3);
+  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
 
   {$IFDEF MSWINDOWS}
   Constraints.MinWidth := 310;

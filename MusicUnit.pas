@@ -14,13 +14,14 @@ uses
     TMusicEngine = class
       private
         FMusicToLoop : String;
-        LoopTimer   : TTimer;
-        MusicPlayer : TMediaPlayer;
+        LoopTimer    : TTimer;
+        MusicPlayer  : TMediaPlayer;
         function MusicIsPlaying : Boolean;
         function ExtractMusicFromResource(ResourceID : String; LoopFile : Boolean = False) : String;
         procedure OnLoopTimer(Sender: TObject);
       public
-        property MusicNameToLoop : String write FMusicToLoop;
+        procedure LoopMusic(ResourceID : String);
+
         procedure PlayMusic(ResourceID : String);
         procedure StopMusic;
         constructor Create;
@@ -38,6 +39,7 @@ begin
   LoopTimer.Enabled  := False;
   LoopTimer.Interval := 30;
   LoopTimer.OnTimer  := OnLoopTimer;
+  IsLooping := False;
 end;
 
 destructor TMusicEngine.Destroy;
@@ -51,41 +53,36 @@ function TMusicEngine.ExtractMusicFromResource(ResourceID: String; LoopFile : Bo
 begin
   var ResStream := TResourceStream.Create(HInstance, ResourceID, RT_RCDATA);
   try
-    const LoopFileName = 'loop_tmp';
     var FileName := '';
 
     {$IFDEF MSWINDOWS}
     if LoopFile then
-      begin
-        FileName := System.SysUtils.GetCurrentDir + '\' + LoopFileName + '.mp3';
-        if Not FileExists(LoopFileName + '.mp3') then
-          begin
-            ResStream.Position := 0;
-            ResStream.SaveToFile(FileName);
-          end;
-      end
+      FileName := System.SysUtils.GetCurrentDir + '\' + 'loop_tmp.mp3'
     else
       FileName := System.SysUtils.GetCurrentDir + '\' + 'tmp.mp3';
     {$ENDIF}
 
     {$IFDEF ANDROID}
     if LoopFile then
-      begin
-        FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, LoopFileName + '.3gp');
-        if Not FileExists(LoopFileName + '.3gp') then
-          begin
-            ResStream.Position := 0;
-            ResStream.SaveToFile(FileName);
-          end;
-      end
+      FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, LoopFileName + '.3gp')
     else
       FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
     {$ENDIF}
 
+    ResStream.Position := 0;
+    ResStream.SaveToFile(FileName);
     Result := FileName;
   finally
     ResStream.Free;
   end;
+end;
+
+procedure TMusicEngine.LoopMusic(ResourceID: String);
+begin
+  MusicPlayer.Stop;
+  MusicPlayer.Clear;
+  FMusicToLoop := ResourceID;
+  LoopTimer.Enabled := True;
 end;
 
 function TMusicEngine.MusicIsPlaying: Boolean;
@@ -99,11 +96,12 @@ begin
     begin
       LoopTimer.Enabled := False;
       try
+        MusicPlayer.Clear;
         var FileName := ExtractMusicFromResource(FMusicToLoop, True);
         MusicPlayer.FileName := FileName;
         MusicPlayer.Play;
       finally
-        LoopTimer.Enabled := True;
+        loopTimer.Enabled := True;
       end;
     end;
 end;
@@ -119,7 +117,7 @@ end;
 
 procedure TMusicEngine.StopMusic;
 begin
-  LoopTimer.Enabled := False;
+  // stop loop
   MusicPlayer.Stop;
   MusicPlayer.Clear;
 end;
