@@ -28,7 +28,7 @@ uses
   FMX.Layouts,
   FMX.Media,
 
-  FrameSplash;
+  FrameSplash, FMX.Gestures;
 
 type
   TMainForm = class(TForm)
@@ -65,6 +65,7 @@ type
     Text1: TText;
     Rectangle_flag_tiles: TRectangle;
     Text2: TText;
+    GestureManager1: TGestureManager;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
@@ -97,6 +98,7 @@ type
     function Check_win:boolean;
 
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+    procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
 
     var SplashFrame : TSplashFrame;
   end;
@@ -190,6 +192,13 @@ begin
   until no_action_during_cycle;
 end;
 
+procedure TMainForm.CaseGesture(Sender: TObject;
+  const EventInfo: TGestureEventInfo; var Handled: Boolean);
+begin
+  if EventInfo.GestureID = System.UITypes.igiLongTap then uncovering_tiles := false;
+  if EventInfo.Flags = [TInteractiveGestureFlag.gfEnd] then uncovering_tiles := true;
+end;
+
 procedure TMainForm.CaseMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
@@ -200,10 +209,6 @@ begin
       uncovering_tiles := false;
       TileClick(Sender);
     end;
-  {$ENDIF}
-
-  {$IFDEF ANDROID}
-    // TODO
   {$ENDIF}
 end;
 
@@ -429,7 +434,14 @@ begin
       GameArray[X,Y].Background.Margins.Bottom := 3;
       GameArray[X,Y].Background.Cursor := crHandPoint;
       GameArray[X,Y].Background.HitTest := True;
+
       GameArray[X,Y].Background.OnMouseDown := CaseMouseDown;
+
+      {$IFDEF ANDROID}
+      GameArray[X,Y].Background.OnGesture   := CaseGesture;
+      GameArray[X,Y].Background.Touch.GestureManager := GestureManager1;
+      GameArray[X,Y].Background.Touch.InteractiveGestures := [TInteractiveGesture.LongTap];
+      {$ENDIF}
 
       GameArray[X,Y].Background.Tag:= index;
       GameArray[X,Y].Background.OnClick := TileClick;
