@@ -7,7 +7,7 @@
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Android64</Platform>
-        <TargetedPlatforms>168963</TargetedPlatforms>
+        <TargetedPlatforms>168962</TargetedPlatforms>
         <AppType>Application</AppType>
         <PlatformSDK Condition="'$(PlatformSDK)'=='' And '$(Platform)'=='Android64'">AndroidSDK25.2.5_64bit.sdk</PlatformSDK>
     </PropertyGroup>
@@ -322,7 +322,7 @@
         <Cfg_2_Android>true</Cfg_2_Android>
         <CfgParent>Cfg_2</CfgParent>
         <Cfg_2>true</Cfg_2>
-        <VerInfo_Build>7</VerInfo_Build>
+        <VerInfo_Build>8</VerInfo_Build>
         <BT_BuildType>AppStore</BT_BuildType>
         <PF_KeyStore>..\..\..\..\..\..\AppData\Roaming\Embarcadero\BDS\22.0\live.keystore</PF_KeyStore>
         <PF_KeyStorePass>852D47EE5F930780CF35E50BA45C7B89E47F08527EBCECA59F217729D80AA8FBA5C85D0F7F6FE24D8722C8A70A2367921443B85F8DB37E518CF6A0D278678659C908F302D55DFAE2BFA2AF19074E1D5892473E161DAB096AE3E416AF4439788E65C49ADE22DF7D7C4622E8229214F3BA965EE9A2DE3FC051B348C2FCA77556E3</PF_KeyStorePass>
@@ -339,13 +339,19 @@
         <AUP_WRITE_CALENDAR>false</AUP_WRITE_CALENDAR>
         <AUP_WRITE_EXTERNAL_STORAGE>false</AUP_WRITE_EXTERNAL_STORAGE>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=7;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
+        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=8;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Icon_MainIcon>DogelonMines_Icon1.ico</Icon_MainIcon>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -389,7 +395,7 @@
                 <Platform value="iOSDevice64">True</Platform>
                 <Platform value="OSX64">True</Platform>
                 <Platform value="OSXARM64">True</Platform>
-                <Platform value="Win32">True</Platform>
+                <Platform value="Win32">False</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
             <Deployment Version="3">

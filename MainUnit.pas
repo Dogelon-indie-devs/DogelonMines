@@ -60,11 +60,6 @@ type
     FloatAnimation_explosion: TFloatAnimation;
     Label1: TLabel;
     ShadowEffect2: TShadowEffect;
-    Rectangle_controls: TRectangle;
-    Rectangle_uncover_tiles: TRectangle;
-    Text1: TText;
-    Rectangle_flag_tiles: TRectangle;
-    Text2: TText;
     GestureManager1: TGestureManager;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
