@@ -534,8 +534,10 @@ begin
   score:= 0;
 
   MusicEngine := TMusicEngine.Create(MainForm);
+  (*
   MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
   MusicEngine.EnableFadeIn;
+  *)
 
   {$IFDEF MSWINDOWS}
   Constraints.MinWidth := 310;
@@ -619,7 +621,7 @@ begin
   if reset_game then
     begin
       Image_background.Position.Y:= -3400;
-      level:= 28;
+      level:= 1;
       score:= 0;
       Update_score;
 
