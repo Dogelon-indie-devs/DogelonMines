@@ -9634,7 +9634,6 @@ object MainForm: TMainForm
   end
   object Timer_music: TTimer
     Interval = 33
-    OnTimer = Timer_musicTimer
     Left = 24
     Top = 448
   end

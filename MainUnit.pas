@@ -70,7 +70,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure Button_uncover_gridClick(Sender: TObject);
     procedure Timer_gameTimer(Sender: TObject);
-    procedure Timer_musicTimer(Sender: TObject);
     procedure FloatAnimation_explosionFinish(Sender: TObject);
     procedure Rectangle_flag_tilesClick(Sender: TObject);
     procedure Rectangle_uncover_tilesClick(Sender: TObject);
@@ -404,18 +403,6 @@ begin
   TimeText.Text:= FormatDateTime('n:ss', elapsed_seconds / SecsPerDay);
 end;
 
-procedure TMainForm.Timer_musicTimer(Sender: TObject);
-begin
-  if not music_enabled then
-    begin
-      Timer_music.Enabled:= false;
-      exit;
-    end;
-
-  if not (MediaPlayer1.State = TMediaState.Playing) then
-    MediaPlayer1.Play;
-end;
-
 procedure TMainForm.CreateGameElements;
 begin
   var index:= 0;
@@ -511,18 +498,11 @@ begin
   score:= 0;
 
   MusicEngine := TMusicEngine.Create;
-      MusicEngine.PlayMusic(LOOP_SOUND_RESOURCE_ID_MP3);
-  {$IFDEF MSWINDOWS}
-  MainForm.Constraints.MinWidth := 310;
+  MusicEngine.MusicNameToLoop := WINS_SOUND_RESOURCE_ID_MP3;
+  MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_MP3);
 
-  music_enabled:= false;  // switch to true to enable music system
-  var music_in_folder:= FileExists('Luminous-loop.mp3');
-  if music_in_folder AND music_enabled then
-    begin
-      MediaPlayer1.Volume:= 0;
-      MainForm.Timer_music.enabled:= true;
-      MainForm.Music_fade_in.Enabled:= true;
-    end;
+  {$IFDEF MSWINDOWS}
+  Constraints.MinWidth := 310;
   {$ENDIF}
 
   if DebugMode then
