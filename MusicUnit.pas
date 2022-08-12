@@ -15,7 +15,7 @@ uses
       private
         LoopTimer   : TTimer;
         MusicPlayer : TMediaPlayer;
-        function IsMusicPlaying : Boolean;
+        function MusicIsPlaying : Boolean;
         function ExtractMusicFromResource(ResourceID : String) : String;
       public
         procedure PlayMusic(ResourceID : String);
@@ -43,11 +43,10 @@ end;
 
 function TMusicEngine.ExtractMusicFromResource(ResourceID: String): String;
 begin
-  Result := '';
   var ResStream := TResourceStream.Create(HInstance, ResourceID, RT_RCDATA);
   try
     {$IFDEF MSWINDOWS}
-    var FileName := System.SysUtils.GetCurrentDir + '\' + 'tmp.3gp';
+    var FileName := System.SysUtils.GetCurrentDir + '\' + 'tmp.mp3';
     {$ENDIF}
     {$IFDEF ANDROID}
     var FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
@@ -60,19 +59,23 @@ begin
   end;
 end;
 
-function TMusicEngine.IsMusicPlaying: Boolean;
+function TMusicEngine.MusicIsPlaying: Boolean;
 begin
   Result := MusicPlayer.State = TMediaState.Playing;
 end;
 
 procedure TMusicEngine.PlayMusic(ResourceID : String);
 begin
-
+  if MusicIsPlaying then StopMusic;
+  var FileName := ExtractMusicFromResource(ResourceID);
+  MusicPlayer.FileName := FileName;
+  MusicPlayer.Play;
 end;
 
 procedure TMusicEngine.StopMusic;
 begin
-
+  MusicPlayer.Stop;
+  MusicPlayer.Clear;
 end;
 
 end.

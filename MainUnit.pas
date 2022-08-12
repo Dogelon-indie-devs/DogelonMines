@@ -126,13 +126,17 @@ var
   flags:      array of array of boolean;
   uncovered:  array of array of boolean;
   GameArray : array of array of TGameCaseRec;
+  MusicEngine : TMusicEngine;
 
 implementation
 
 const
-  LOOP_SOUND_RESOURCE_ID = 'Resource_Loop';
-  LOSE_SOUND_RESOURCE_ID = 'Resource_Lose';
-  WINS_SOUND_RESOURCE_ID = 'Resource_Win';
+  LOOP_SOUND_RESOURCE_ID_3GP = 'Resource_Loop_3gp';
+  LOSE_SOUND_RESOURCE_ID_3GP = 'Resource_Lose_3gp';
+  WINS_SOUND_RESOURCE_ID_3GP = 'Resource_Wins_3gp';
+  LOOP_SOUND_RESOURCE_ID_MP3 = 'Resource_Loop_mp3';
+  LOSE_SOUND_RESOURCE_ID_MP3 = 'Resource_Lose_mp3';
+  WINS_SOUND_RESOURCE_ID_MP3 = 'Resource_Wins_mp3';
 
 {$R *.fmx}
 
@@ -506,6 +510,8 @@ begin
   level:= 1;
   score:= 0;
 
+  MusicEngine := TMusicEngine.Create;
+
   {$IFDEF MSWINDOWS}
   MainForm.Constraints.MinWidth := 310;
 
@@ -526,6 +532,7 @@ end;
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   DestroyGameElements;
+  MusicEngine.Free;
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
