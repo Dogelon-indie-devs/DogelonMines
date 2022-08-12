@@ -64,6 +64,9 @@ type
     Background_scroll_anim: TFloatAnimation;
     Image_background: TImage;
     Button_advance_bg: TButton;
+    Label_level: TLabel;
+    ShadowEffect3: TShadowEffect;
+    Level_fadeout_anim: TFloatAnimation;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
@@ -398,9 +401,26 @@ begin
   if Check_win then
     begin
       inc(score,mines_in_the_grid*10);
-      inc(level);
-      PlayRectangle.tag:= 1;
-      PlayText.Text:= 'Next level';
+      case level of
+      1..28:
+        begin
+          inc(level);
+          PlayRectangle.tag:= 1;
+          PlayText.Text:= 'Next level';
+        end;
+      29:
+        begin
+          inc(level);
+          PlayRectangle.tag:= 1;
+          PlayText.Text:= 'Last level';
+        end;
+      30:
+        begin
+          game_running:= false;
+          Label_level.Text:= 'GAME COMPLETE!';
+          Label_level.Opacity:= 1;
+        end;
+      end;
     end;
 
   Update_score;
@@ -585,23 +605,39 @@ begin
 end;
 
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
+
+  procedure Display_current_level;
+  begin
+    Level_fadeout_anim.Enabled:= false;
+    Label_level.Opacity:= 1;
+    Label_level.Text:= 'LEVEL: '+level.ToString+'/30';
+    Level_fadeout_anim.Enabled:= true;
+  end;
+
 begin
-  Clean_up;
-  CreateGameElements;
-  Game_start;
+  var reset_game:= PlayRectangle.tag = 0;
+  if reset_game then
+    begin
+      Image_background.Position.Y:= -3400;
+      level:= 28;
+      score:= 0;
+      Update_score;
+
+      start_timestamp:= Now;
+      game_running:= true;
+      Timer_game.Enabled:= true;
+    end;
+
+  Display_current_level;
 
   var proceed_to_next_level:= PlayRectangle.tag > 0;
   if proceed_to_next_level then
     Scroll_background_to_next_level;
 
-  var reset_game:= PlayRectangle.tag = 0;
-  if reset_game then
-    begin
-      Image_background.Position.Y:= -3400;
-      level:= 1;
-      score:= 0;
-      Update_score;
-    end;
+  Clean_up;
+  CreateGameElements;
+  Game_start;
+
   PlayRectangle.tag := 0;
   PlayText.Text:= 'Restart';
 end;
