@@ -30,7 +30,8 @@ uses
   FMX.Media,
   FMX.Gestures,
 
-  FrameSplash;
+  FrameSplash,
+  MusicUnit;
 
 type
   TMainForm = class(TForm)
@@ -95,7 +96,6 @@ type
     function Check_win:boolean;
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
-    function ExtractAudioFromResource(ResourceID : String) : String;
     var SplashFrame : TSplashFrame;
   end;
 
@@ -135,20 +135,6 @@ const
   WINS_SOUND_RESOURCE_ID = 'Resource_Win';
 
 {$R *.fmx}
-
-function TMainForm.ExtractAudioFromResource(ResourceID : String) : String; // Only For Android
-begin
-  Result := '';
-  var ResStream := TResourceStream.Create(HInstance, ResourceID, RT_RCDATA);
-  try
-    var FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
-    ResStream.Position := 0;
-    ResStream.SaveToFile(FileName);
-    Result := FileName;
-  finally
-    ResStream.Free;
-  end;
-end;
 
 procedure TMainForm.Flag_tile(x,y:integer);
 begin
