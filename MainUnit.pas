@@ -56,9 +56,6 @@ type
     GameGridPanelLayout: TGridPanelLayout;
     Button_uncover_grid: TButton;
     Timer_game: TTimer;
-    MediaPlayer1: TMediaPlayer;
-    Music_fade_in: TFloatAnimation;
-    Timer_music: TTimer;
     Image_gameover: TImage;
     FloatAnimation_explosion: TFloatAnimation;
     Label1: TLabel;
@@ -516,8 +513,9 @@ begin
   level:= 1;
   score:= 0;
 
-  MusicEngine := TMusicEngine.Create;
+  MusicEngine := TMusicEngine.Create(MainForm);
   MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
+  MusicEngine.EnableFadeIn;
 
   {$IFDEF MSWINDOWS}
   Constraints.MinWidth := 310;

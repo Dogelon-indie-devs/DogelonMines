@@ -7,7 +7,8 @@ uses
   System.IOUtils,
   System.Types,
   System.SysUtils,
-  FMX.Types,
+  FMX.Types,  FMX.Forms,
+  FMX.Ani,
   FMX.Media;
 
   type
@@ -17,17 +18,20 @@ uses
         FMusicToLoop : String;
         LoopTimer    : TTimer;
         MusicPlayer  : TMediaPlayer;
+        MusicFadeIn  : TFloatAnimation;
         function MusicIsPlaying : Boolean;
         function ExtractMusicFromResource(ResourceID : String; LoopFile : Boolean = False) : String;
         procedure OnLoopTimer(Sender: TObject);
         procedure SetFVolume(Value: Single);
       public
         property Volume : Single write SetFVolume;
+        procedure EnableFadeIn;
+        procedure DisableFadeIn;
         procedure LoopMusic(ResourceID : String);
         procedure StopLoop;
         procedure PlayMusic(ResourceID : String);
         procedure StopMusic;
-        constructor Create;
+        constructor Create(AForm : TForm);
         destructor Destroy; override;
     end;
 
@@ -35,13 +39,22 @@ implementation
 
 { TMusicEngine }
 
-constructor TMusicEngine.Create;
+constructor TMusicEngine.Create(AForm : TForm);
 begin
-  MusicPlayer := TMediaPlayer.Create(Nil);
+  MusicPlayer := TMediaPlayer.Create(AForm);
+  MusicPlayer.Parent := AForm;
   LoopTimer   := TTimer.Create(Nil);
   LoopTimer.Enabled  := False;
   LoopTimer.Interval := 30;
   LoopTimer.OnTimer  := OnLoopTimer;
+  MusicFadeIn := TFloatAnimation.Create(MusicPlayer);
+  MusicFadeIn.Parent := MusicPlayer;
+  MusicFadeIn.Delay := 0;
+  MusicFadeIn.Duration := 5;
+  MusicFadeIn.Enabled  := False;
+  MusicFadeIn.PropertyName := 'volume';
+  MusicFadeIn.StartValue := 0;
+  MusicFadeIn.StopValue  := 0.8;
 end;
 
 destructor TMusicEngine.Destroy;
@@ -49,6 +62,16 @@ begin
   LoopTimer.Free;
   MusicPlayer.Free;
   inherited;
+end;
+
+procedure TMusicEngine.DisableFadeIn;
+begin
+  MusicFadeIn.Enabled := False;
+end;
+
+procedure TMusicEngine.EnableFadeIn;
+begin
+  MusicFadeIn.Enabled := True;
 end;
 
 function TMusicEngine.ExtractMusicFromResource(ResourceID: String; LoopFile : Boolean = False): String;
@@ -102,6 +125,8 @@ begin
         var FileName := ExtractMusicFromResource(FMusicToLoop, True);
         MusicPlayer.FileName := FileName;
         MusicPlayer.Play;
+        DisableFadeIn;
+        EnableFadeIn;
       finally
         loopTimer.Enabled := True;
       end;
