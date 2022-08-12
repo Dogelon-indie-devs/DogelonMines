@@ -246,6 +246,42 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Audio\Luminous-loop.3gp" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-loop.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-loop.3gp" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-loop.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-win.3gp" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-win.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-win.3gp" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-win.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Android64\Debug\AndroidManifest.xml" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\</RemoteDir>
             <RemoteName>AndroidManifest.xml</RemoteName>
@@ -388,6 +424,24 @@
             <RemoteName>ic_notification.png</RemoteName>
             <DeployClass>Android_NotificationIcon24</DeployClass>
             <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-lose.3gp" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-lose.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-lose.3gp" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-lose.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>

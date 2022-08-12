@@ -9,6 +9,7 @@ uses
   System.Classes,
   System.Variants,
   System.Rtti,
+  System.IOUtils,
   DateUtils,
 
   FMX.Types,
@@ -27,8 +28,9 @@ uses
   FMX.Ani,
   FMX.Layouts,
   FMX.Media,
+  FMX.Gestures,
 
-  FrameSplash, FMX.Gestures;
+  FrameSplash;
 
 type
   TMainForm = class(TForm)
@@ -91,10 +93,9 @@ type
     function Count_remaining_covered_tiles:integer;
     function Count_flagged_tiles: integer;
     function Check_win:boolean;
-
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
-
+    function ExtractAudioFromResource(ResourceID : String) : String;
     var SplashFrame : TSplashFrame;
   end;
 
@@ -128,8 +129,26 @@ var
 
 implementation
 
+const
+  LOOP_SOUND_RESOURCE_ID = 'Resource_Loop';
+  LOSE_SOUND_RESOURCE_ID = 'Resource_Lose';
+  WINS_SOUND_RESOURCE_ID = 'Resource_Win';
+
 {$R *.fmx}
 
+function TMainForm.ExtractAudioFromResource(ResourceID : String) : String;
+begin
+  Result := '';
+  var ResStream := TResourceStream.Create(HInstance, ResourceID, RT_RCDATA);
+  try
+    var FileName := System.IOUtils.TPath.Combine(System.IOUtils.TPath.GetDocumentsPath, 'tmp.3gp');
+    ResStream.Position := 0;
+    ResStream.SaveToFile(FileName);
+    Result := FileName;
+  finally
+    ResStream.Free;
+  end;
+end;
 
 procedure TMainForm.Flag_tile(x,y:integer);
 begin
