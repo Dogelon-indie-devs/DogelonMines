@@ -115,10 +115,12 @@ type
     procedure VolumeTrackBarTracking(Sender: TObject);
     procedure MainStoryRectangleClick(Sender: TObject);
     procedure MainCreditsRectangleClick(Sender: TObject);
+    procedure DogelonImageClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure Handle_level_transition;
     procedure Generate_grid_values;
     procedure Place_hints;
     procedure Game_start;
@@ -623,6 +625,16 @@ begin
     end;
 end;
 
+procedure TMainForm.DogelonImageClick(Sender: TObject);
+begin
+  if DebugMode then
+    begin
+      inc(level);
+      PlayRectangle.tag:= 1;
+      Handle_level_transition;
+    end;
+end;
+
 procedure TMainForm.FloatAnimation_explosionFinish(Sender: TObject);
 begin
   ShadowEffect2.UpdateParentEffects;
@@ -640,6 +652,8 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+  MainRectangle.Visible:= true;
+
   SetLength(mines, desired_grid_size, desired_grid_size);
   SetLength(hints, desired_grid_size, desired_grid_size);
   SetLength(uncovered,desired_grid_size, desired_grid_size);
@@ -705,7 +719,6 @@ begin
   Place_hints;
   Initial_free_hint;
 
-  start_timestamp:= Now;
   game_running:= true;
   Timer_game.Enabled:= true;
 end;
@@ -736,7 +749,8 @@ begin
     hints[x,y]:= Count_mines_around_tile(x,y);
 end;
 
-procedure TMainForm.PlayRectangleClick(Sender: TObject);
+procedure TMainForm.Handle_level_transition;
+
    procedure Display_current_level;
   begin
     Level_fadeout_anim.Enabled:= false;
@@ -771,6 +785,11 @@ begin
 
   PlayRectangle.tag := 0;
   PlayText.Text:= 'Restart';
+end;
+
+procedure TMainForm.PlayRectangleClick(Sender: TObject);
+begin
+  Handle_level_transition;
 end;
 
 procedure TMainForm.Rectangle_flag_tilesClick(Sender: TObject);
