@@ -89,6 +89,10 @@ type
     ColorAnimation5: TColorAnimation;
     ShadowEffect8: TShadowEffect;
     Text5: TText;
+    VolumeContainerRectangle: TRectangle;
+    VolumeTrackBar: TTrackBar;
+    VolumeSubContainerRectangle: TRectangle;
+    VolumeFloatAnimation: TFloatAnimation;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -101,6 +105,8 @@ type
     procedure MainPlayRectangleClick(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
     procedure GameBackRectangleClick(Sender: TObject);
+    procedure VolumeRectangleClick(Sender: TObject);
+    procedure VolumeTrackBarTracking(Sender: TObject);
   private
     { Private declarations }
   public
@@ -149,6 +155,7 @@ var
   game_running: boolean;
   music_enabled:boolean;
   uncovering_tiles: boolean;
+  VolumePressed : Boolean = False;
   start_timestamp: TDateTime;
   bg_movement_distance_px: integer;
   mines:      array of array of boolean;
@@ -461,6 +468,31 @@ end;
 procedure TMainForm.Update_score;
 begin
   ScoreText.Text:= score.ToString;
+end;
+
+procedure TMainForm.VolumeRectangleClick(Sender: TObject);
+begin
+  if Not VolumePressed then
+    begin
+      VolumeFloatAnimation.Enabled  := False;
+      VolumeFloatAnimation.StartValue := 0;
+      VolumeFloatAnimation.StopValue  := 1;
+      VolumeFloatAnimation.Enabled := True;
+      VolumePressed := True;
+    end
+  else
+    begin
+      VolumeFloatAnimation.Enabled  := False;
+      VolumeFloatAnimation.StartValue := 1;
+      VolumeFloatAnimation.StopValue  := 0;
+      VolumeFloatAnimation.Enabled := True;
+      VolumePressed := False;
+    end;
+end;
+
+procedure TMainForm.VolumeTrackBarTracking(Sender: TObject);
+begin
+  if VolumeTrackBar.Value = 0 then Text5.Text := '🔇' else Text5.Text := '🔊';
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
