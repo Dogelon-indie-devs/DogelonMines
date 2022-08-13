@@ -53,7 +53,18 @@ procedure TStoryFrame.NextButtonClick(Sender: TObject);
 begin
   with Sender as TRectangle do
     begin
-      if tag <= 9 then
+      if Image1.Opacity = 0 then
+        begin
+          Tag := 0;
+          Image1.Opacity:= 1;
+          StoryRectangle.Opacity:= 0;
+          FloatAnimation1.Enabled := False;
+          var next_image:= ImageList1.Source[tag].MultiResBitmap[0];
+          Image1.MultiResBitmap[0].Assign(next_image);
+          FloatAnimation1.Enabled := True;
+          Text1.Text := 'Next »';
+        end;
+      if tag <= 8 then
         begin
           FloatAnimation1.Enabled := False;
           var next_image:= ImageList1.Source[Tag].MultiResBitmap[0];
@@ -65,6 +76,7 @@ begin
         begin
           Image1.Opacity:= 0;
           StoryRectangle.Opacity:= 1;
+          Text1.Text := '« Back';
         end;
     end;
 end;

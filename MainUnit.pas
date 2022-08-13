@@ -396,13 +396,12 @@ begin
       StoryFrame := TStoryFrame.Create(StoryRectangle);
       StoryFrame.Parent := StoryRectangle;
       StoryFrame.Align  := TAlignLayout.Client;
-
-      StoryFrame.NextButton.Tag:= 1;
-      StoryFrame.Image1.Opacity:= 1;
-      StoryFrame.StoryRectangle.Opacity:= 0;
-      var initial_image:= StoryFrame.ImageList1.Source[0].MultiResBitmap[0];
-      StoryFrame.Image1.MultiResBitmap[0].Assign(initial_image);
     end;
+  StoryFrame.NextButton.Tag:= 1;
+  StoryFrame.Image1.Opacity:= 1;
+  StoryFrame.StoryRectangle.Opacity:= 0;
+  var initial_image:= StoryFrame.ImageList1.Source[0].MultiResBitmap[0];
+  StoryFrame.Image1.MultiResBitmap[0].Assign(initial_image);
 end;
 
 function TMainForm.Check_win: boolean;
