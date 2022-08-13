@@ -620,12 +620,12 @@ end;
 
 procedure TMainForm.Reset_background_image;
 begin
-  Image_background.Width:=  MainForm.Width;
+  Image_background.Width:=  MainForm.Width+10;
   Image_background.Height:= Image_background.Width *10;
   const screen_height = MainForm.Height;
   const image_height  = Image_background.Height;
   Image_background.Position.Y:= 0 - image_height + screen_height;
-  bg_movement_distance_px:= round(abs(Image_background.Position.Y)/30);
+  bg_movement_distance_px:= round(abs(Image_background.Position.Y)/30)-1;
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -645,8 +645,6 @@ begin
   MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
   MusicEngine.EnableFadeIn;
   *)
-
-  Reset_background_image;
 
   {$IFDEF MSWINDOWS}
   Constraints.MinWidth := 350;
@@ -677,6 +675,8 @@ begin
   SplashFrame.Align  := TAlignLayout.Client;
   SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
   SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
+
+  Reset_background_image;
 end;
 
 procedure TMainForm.GameBackRectangleClick(Sender: TObject);

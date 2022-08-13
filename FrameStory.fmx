@@ -1,12 +1,12 @@
 object StoryFrame: TStoryFrame
-  Size.Width = 299.000000000000000000
-  Size.Height = 471.000000000000000000
+  Size.Width = 320.000000000000000000
+  Size.Height = 600.000000000000000000
   Size.PlatformDefault = False
   object MainRectangle: TRectangle
     Align = Client
     Fill.Color = claWhite
-    Size.Width = 299.000000000000000000
-    Size.Height = 471.000000000000000000
+    Size.Width = 320.000000000000000000
+    Size.Height = 600.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     object BottomRectangle: TRectangle
@@ -16,8 +16,8 @@ object StoryFrame: TStoryFrame
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 10.000000000000000000
       Position.X = 10.000000000000000000
-      Position.Y = 400.000000000000000000
-      Size.Width = 279.000000000000000000
+      Position.Y = 529.000000000000000000
+      Size.Width = 300.000000000000000000
       Size.Height = 61.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None

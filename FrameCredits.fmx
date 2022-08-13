@@ -1,12 +1,12 @@
 object CreditsFrame: TCreditsFrame
-  Size.Width = 299.000000000000000000
-  Size.Height = 481.000000000000000000
+  Size.Width = 320.000000000000000000
+  Size.Height = 600.000000000000000000
   Size.PlatformDefault = False
   object MainRectangle: TRectangle
     Align = Client
     Fill.Color = claWhite
-    Size.Width = 299.000000000000000000
-    Size.Height = 481.000000000000000000
+    Size.Width = 320.000000000000000000
+    Size.Height = 600.000000000000000000
     Size.PlatformDefault = False
     Stroke.Kind = None
     object BottomRectangle: TRectangle
@@ -16,8 +16,8 @@ object CreditsFrame: TCreditsFrame
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 10.000000000000000000
       Position.X = 10.000000000000000000
-      Position.Y = 410.000000000000000000
-      Size.Width = 279.000000000000000000
+      Position.Y = 529.000000000000000000
+      Size.Width = 300.000000000000000000
       Size.Height = 61.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
@@ -60,6 +60,201 @@ object CreditsFrame: TCreditsFrame
           TextSettings.Font.Size = 18.000000000000000000
           TextSettings.Font.StyleExt = {00050000000000000004000000}
           TextSettings.FontColor = xFF111422
+        end
+      end
+    end
+    object CenterRectangle: TRectangle
+      Align = Client
+      Fill.Kind = None
+      Padding.Left = 20.000000000000000000
+      Padding.Top = 50.000000000000000000
+      Padding.Right = 20.000000000000000000
+      Padding.Bottom = 50.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 529.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object Text1: TText
+        Align = Top
+        Position.X = 20.000000000000000000
+        Position.Y = 50.000000000000000000
+        Size.Width = 280.000000000000000000
+        Size.Height = 85.000000000000000000
+        Size.PlatformDefault = False
+        Text = 
+          'This little game is our submission for the summer Hackathon in E' +
+          'longevity discord. We hope you'#39'll have fun with it, Martians! '
+      end
+      object Text2: TText
+        Align = Center
+        Size.Width = 280.000000000000000000
+        Size.Height = 136.000000000000000000
+        Size.PlatformDefault = False
+        Text = 
+          'Two devs made it from scratch in about 4 days, the entire thing ' +
+          'is written in Delphi 11 and full source code can be found on our' +
+          ' github. The main goal was to prove that pretty cool games and a' +
+          'pps can be built really quickly, all you need is motivation and ' +
+          'some skill.'
+      end
+      object GridLayout1: TGridLayout
+        Align = Bottom
+        ItemHeight = 32.000000000000000000
+        ItemWidth = 140.000000000000000000
+        Orientation = Horizontal
+        Position.X = 20.000000000000000000
+        Position.Y = 279.000000000000000000
+        Size.Width = 280.000000000000000000
+        Size.Height = 200.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        object Label1: TLabel
+          Margins.Right = 5.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Trailing
+          Text = 'Game creators:'
+          TabOrder = 11
+        end
+        object Label2: TLabel
+          Cursor = crHandPoint
+          StyledSettings = [Family, Size]
+          Margins.Left = 5.000000000000000000
+          Position.X = 145.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.FontColor = claBlue
+          Text = 'https://dogelon.dev'
+          TabOrder = 9
+          OnClick = URLClick
+        end
+        object Label3: TLabel
+          Margins.Right = 5.000000000000000000
+          Position.Y = 32.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Trailing
+          Text = 'Full source code:'
+          TabOrder = 10
+        end
+        object Label4: TLabel
+          Tag = 1
+          Cursor = crHandPoint
+          StyledSettings = [Family, Size]
+          Margins.Left = 5.000000000000000000
+          Position.X = 145.000000000000000000
+          Position.Y = 32.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.FontColor = claBlue
+          Text = 'Github'
+          TabOrder = 7
+        end
+        object Label5: TLabel
+          Margins.Right = 5.000000000000000000
+          Position.Y = 64.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Trailing
+          Text = 'Music:'
+          TabOrder = 8
+        end
+        object Label6: TLabel
+          Tag = 2
+          Cursor = crHandPoint
+          StyledSettings = [Family, Size]
+          Margins.Left = 5.000000000000000000
+          Position.X = 145.000000000000000000
+          Position.Y = 64.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.FontColor = claBlue
+          Text = 'InducedLuminous '
+          TabOrder = 5
+        end
+        object Label7: TLabel
+          Margins.Right = 5.000000000000000000
+          Position.Y = 96.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Trailing
+          Text = 'Game listing:'
+          TabOrder = 6
+        end
+        object Label8: TLabel
+          Tag = 3
+          Cursor = crHandPoint
+          StyledSettings = [Family, Size]
+          Margins.Left = 5.000000000000000000
+          Position.X = 145.000000000000000000
+          Position.Y = 96.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.FontColor = claBlue
+          Text = 'Google Play'
+          TabOrder = 3
+        end
+        object Label9: TLabel
+          Margins.Right = 5.000000000000000000
+          Position.Y = 128.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Trailing
+          Text = 'Elongevity discord'
+          TabOrder = 4
+        end
+        object Label10: TLabel
+          Tag = 4
+          Cursor = crHandPoint
+          StyledSettings = [Family, Size]
+          Margins.Left = 5.000000000000000000
+          Position.X = 145.000000000000000000
+          Position.Y = 128.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.FontColor = claBlue
+          Text = 'discord.gg/elongevity'
+          TabOrder = 1
+        end
+        object Label11: TLabel
+          Margins.Right = 5.000000000000000000
+          Position.Y = 160.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.HorzAlign = Trailing
+          Text = 'Dogelon NFT comic:'
+          TabOrder = 2
+        end
+        object Label12: TLabel
+          Tag = 5
+          Cursor = crHandPoint
+          StyledSettings = [Family, Size]
+          Margins.Left = 5.000000000000000000
+          Position.X = 145.000000000000000000
+          Position.Y = 160.000000000000000000
+          Size.Width = 135.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.FontColor = claBlue
+          Text = 'opensea.io'
+          TabOrder = 0
         end
       end
     end
