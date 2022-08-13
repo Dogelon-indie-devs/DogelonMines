@@ -97,6 +97,8 @@ type
     VolumeFloatAnimation: TFloatAnimation;
     StoryRectangle: TRectangle;
     CreditsRectangle: TRectangle;
+    Logo: TImage;
+    Text6: TText;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -376,6 +378,7 @@ end;
 
 procedure TMainForm.MainPlayRectangleClick(Sender: TObject);
 begin
+  Reset_background_image;
   GameRectangle.Visible := True;
   MainRectangle.Visible := False;
   DogelonImageFloatAnimation.Enabled := True;
@@ -653,11 +656,15 @@ begin
   *)
 
   {$IFDEF MSWINDOWS}
-  Constraints.MinWidth := 350;
+  Constraints.MinWidth := 320;
+  Constraints.MinHeight:= 600;
   {$ENDIF}
 
   if DebugMode then
-    Button_uncover_grid.Visible:= true;
+    begin
+      Button_uncover_grid.Visible:= true;
+      Button_advance_bg.Visible:= true;
+    end;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -681,8 +688,6 @@ begin
   SplashFrame.Align  := TAlignLayout.Client;
   SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
   SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
-
-  Reset_background_image;
 end;
 
 procedure TMainForm.GameBackRectangleClick(Sender: TObject);
