@@ -321,7 +321,7 @@
         <Cfg_2_Android>true</Cfg_2_Android>
         <CfgParent>Cfg_2</CfgParent>
         <Cfg_2>true</Cfg_2>
-        <VerInfo_Build>12</VerInfo_Build>
+        <VerInfo_Build>13</VerInfo_Build>
         <PF_KeyStore>..\..\..\..\..\..\AppData\Roaming\Embarcadero\BDS\22.0\live.keystore</PF_KeyStore>
         <PF_KeyStorePass>852D47EE5F930780CF35E50BA45C7B89E47F08527EBCECA59F217729D80AA8FBA5C85D0F7F6FE24D8722C8A70A2367921443B85F8DB37E518CF6A0D278678659C908F302D55DFAE2BFA2AF19074E1D5892473E161DAB096AE3E416AF4439788E65C49ADE22DF7D7C4622E8229214F3BA965EE9A2DE3FC051B348C2FCA77556E3</PF_KeyStorePass>
         <PF_AliasKey>dogelonmines</PF_AliasKey>
@@ -337,7 +337,7 @@
         <AUP_WRITE_CALENDAR>false</AUP_WRITE_CALENDAR>
         <AUP_WRITE_EXTERNAL_STORAGE>false</AUP_WRITE_EXTERNAL_STORAGE>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=12;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
+        <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=13;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=preferExternal;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=</VerInfo_Keys>
         <BT_BuildType>AppStore</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
