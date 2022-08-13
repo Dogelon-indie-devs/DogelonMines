@@ -172,7 +172,8 @@ var
   flags:      array of array of boolean;
   uncovered:  array of array of boolean;
   GameArray : array of array of TGameCaseRec;
-  MusicEngine : TMusicEngine;
+  MusicEngineBackground : TMusicEngine;
+  MusicEngineSounds     : TMusicEngine;
 
 implementation
 
@@ -460,12 +461,14 @@ begin
         begin
           game_running:= false;
           FloatAnimation_explosion.Enabled:= true;
+
           {$IFDEF ANDROID}
-          MusicEngine.PlayMusic(LOSE_SOUND_RESOURCE_ID_3GP);
+          MusicEngineSounds.PlayMusic(LOSE_SOUND_RESOURCE_ID_3GP);
           {$ENDIF}
           {$IFDEF MSWINDOWS}
-          MusicEngine.PlayMusic(LOSE_SOUND_RESOURCE_ID_MP3);
+          MusicEngineSounds.PlayMusic(LOSE_SOUND_RESOURCE_ID_MP3);
           {$ENDIF}
+
         end;
     end
   else
@@ -493,10 +496,10 @@ begin
           Label_level.Text:= 'GAME COMPLETE!';
           Label_level.Opacity:= 1;
           {$IFDEF ANDROID}
-          MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_3GP);
+          MusicEngineSounds.PlayMusic(WINS_SOUND_RESOURCE_ID_3GP);
           {$ENDIF}
           {$IFDEF MSWINDOWS}
-          MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_MP3);
+          MusicEngineSounds.PlayMusic(WINS_SOUND_RESOURCE_ID_MP3);
           {$ENDIF}
         end;
       end;
@@ -533,7 +536,8 @@ end;
 procedure TMainForm.VolumeTrackBarTracking(Sender: TObject);
 begin
   if VolumeTrackBar.Value = 0 then Text5.Text := '🔇' else Text5.Text := '🔊';
-  MusicEngine.Volume := VolumeTrackBar.Value;
+  MusicEngineSounds.Volume := VolumeTrackBar.Value;
+  MusicEngineBackground.Volume := VolumeTrackBar.Value;
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
@@ -660,14 +664,17 @@ begin
   level:= 1;
   score:= 0;
 
-  MusicEngine := TMusicEngine.Create(MainForm);
-  MusicEngine.Volume := 0.5;
+  MusicEngineSounds := TMusicEngine.Create(MainForm);
+  MusicEngineSounds.Volume := 0.5;
+
+  MusicEngineBackground := TMusicEngine.Create(MainForm);
+  MusicEngineBackground.Volume := 0.5;
   {$IFDEF ANDROID}
-  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
+  MusicEngineBackground.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
   {$ENDIF}
 
   {$IFDEF MSWINDOWS}
-  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
+  MusicEngineBackground.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
   Constraints.MinWidth := 320;
   Constraints.MinHeight:= 600;
   {$ENDIF}
@@ -676,7 +683,8 @@ end;
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   DestroyGameElements;
-  MusicEngine.Free;
+  MusicEngineBackground.Free;
+  MusicEngineSounds.Free;
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
@@ -780,17 +788,6 @@ end;
 
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
 begin
-  if PlayText.Text <> 'Play' then
-    begin
-      {$IFDEF ANDROID}
-      MusicEngine.Volume := VolumeTrackBar.Value;
-      MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
-      {$ENDIF}
-      {$IFDEF MSWINDOWS}
-      MusicEngine.Volume := VolumeTrackBar.Value;
-      MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
-      {$ENDIF}
-    end;
   Handle_level_transition;
 end;
 
