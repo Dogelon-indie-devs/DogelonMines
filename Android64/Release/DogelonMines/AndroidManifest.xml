@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.embarcadero.DogelonMines"
-    android:versionCode="13"
+    package="org.dogelon_indie_devs.DogelonMines"
+    android:versionCode="2"
     android:versionName="1.0.0"
     android:installLocation="preferExternal">
     <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="31" />
@@ -16,7 +16,7 @@
         android:persistent="False"
         android:restoreAnyVersion="False"
         android:label="DogelonMines"
-        android:debuggable="true"
+        android:debuggable="false"
         android:largeHeap="False"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"

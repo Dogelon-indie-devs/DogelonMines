@@ -56,7 +56,6 @@ type
     TimeText: TText;
     MineImage: TImage;
     GameGridPanelLayout: TGridPanelLayout;
-    Button_uncover_grid: TButton;
     Timer_game: TTimer;
     Image_gameover: TImage;
     FloatAnimation_explosion: TFloatAnimation;
@@ -65,7 +64,6 @@ type
     GestureManager1: TGestureManager;
     Background_scroll_anim: TFloatAnimation;
     Image_background: TImage;
-    Button_advance_bg: TButton;
     Label_level: TLabel;
     ShadowEffect3: TShadowEffect;
     Level_fadeout_anim: TFloatAnimation;
@@ -102,12 +100,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure Button_uncover_gridClick(Sender: TObject);
     procedure Timer_gameTimer(Sender: TObject);
     procedure FloatAnimation_explosionFinish(Sender: TObject);
     procedure Rectangle_flag_tilesClick(Sender: TObject);
     procedure Rectangle_uncover_tilesClick(Sender: TObject);
-    procedure Button_advance_bgClick(Sender: TObject);
     procedure MainPlayRectangleClick(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
     procedure GameBackRectangleClick(Sender: TObject);
@@ -320,18 +316,6 @@ begin
   var current_y_position:= Image_background.Position.Y;
   Background_scroll_anim.StopValue:= current_y_position + bg_movement_distance_px;
   Background_scroll_anim.Enabled:= true;
-end;
-
-procedure TMainForm.Button_advance_bgClick(Sender: TObject);
-begin
-  Scroll_background_to_next_level;
-end;
-
-procedure TMainForm.Button_uncover_gridClick(Sender: TObject);
-begin
-  for var x := 0 to grid_size do
-  for var y := 0 to grid_size do
-    Uncover_tile(x,y);
 end;
 
 procedure TMainForm.Initial_free_hint;
@@ -687,12 +671,6 @@ begin
   Constraints.MinWidth := 320;
   Constraints.MinHeight:= 600;
   {$ENDIF}
-
-  if DebugMode then
-    begin
-      Button_uncover_grid.Visible:= true;
-      Button_advance_bg.Visible:= true;
-    end;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);

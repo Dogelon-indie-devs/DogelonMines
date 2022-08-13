@@ -56,31 +56,21 @@ begin
     begin
       if Image1.Opacity = 0 then
         begin
-          FloatAnimation2.Enabled := False;
           Tag := 0;
           Image1.Opacity:= 1;
           StoryRectangle.Opacity:= 0;
-          FloatAnimation1.Enabled := False;
-          FloatAnimation1.StartValue := 90;
-          FloatAnimation1.StopValue  := 0;
           var next_image:= ImageList1.Source[tag].MultiResBitmap[0];
           Image1.MultiResBitmap[0].Assign(next_image);
-          FloatAnimation1.Enabled := True;
           Text1.Text := 'Next »'; Tag := 1; exit;
         end;
       if tag <= 8 then
         begin
-          FloatAnimation1.Enabled := False;
-          FloatAnimation1.StartValue := 0;
-          FloatAnimation1.StopValue  := 360;
           var next_image:= ImageList1.Source[Tag].MultiResBitmap[0];
           Image1.MultiResBitmap[0].Assign(next_image);
           tag:= tag + 1;
-          FloatAnimation1.Enabled := True;
         end
       else
         begin
-          FloatAnimation2.Enabled := True;
           Image1.Opacity:= 0;
           StoryRectangle.Opacity:= 1;
           Text1.Text := '« Back';
