@@ -537,6 +537,7 @@ end;
 procedure TMainForm.VolumeTrackBarTracking(Sender: TObject);
 begin
   if VolumeTrackBar.Value = 0 then Text5.Text := '🔇' else Text5.Text := '🔊';
+  MusicEngine.Volume := VolumeTrackBar.Value;
 end;
 
 procedure TMainForm.Timer_gameTimer(Sender: TObject);
@@ -664,10 +665,9 @@ begin
   score:= 0;
 
   MusicEngine := TMusicEngine.Create(MainForm);
-  (*
+  MusicEngine.Volume := 0.5;
   MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
-  MusicEngine.EnableFadeIn;
-  *)
+
 
   {$IFDEF MSWINDOWS}
   Constraints.MinWidth := 320;

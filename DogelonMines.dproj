@@ -371,6 +371,36 @@
             <Form>CreditsFrame</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <RcItem Include="Audio\Luminous-loop.3gp">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Resource_Loop_3gp</ResourceId>
+        </RcItem>
+        <RcItem Include="Audio\Luminous-loop.mp3">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Resource_Loop_mp3</ResourceId>
+        </RcItem>
+        <RcItem Include="Audio\Luminous-lose.3gp">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Resource_Lose_3gp</ResourceId>
+        </RcItem>
+        <RcItem Include="Audio\Luminous-lose.mp3">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Resource_Lose_mp3</ResourceId>
+        </RcItem>
+        <RcItem Include="Audio\Luminous-win.3gp">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Resource_Wins_3gp</ResourceId>
+        </RcItem>
+        <RcItem Include="Audio\Luminous-win.mp3">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Resource_Wins_mp3</ResourceId>
+        </RcItem>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -692,6 +722,12 @@
                 <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeArmeabiFile">
                     <Platform Name="Android">
                         <RemoteName>libDogelonMines.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win64\Debug\DogelonMines.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win64">
+                        <RemoteName>DogelonMines.rsm</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

@@ -2,6 +2,8 @@ program DogelonMines;
 
 
 
+{$R *.dres}
+
 uses
   System.StartUpCopy,
   FMX.Forms,

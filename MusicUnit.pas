@@ -15,11 +15,11 @@ uses
   type
     TMusicEngine = class
       private
-        FVolume      : Single;
-        FMusicToLoop : String;
-        LoopTimer    : TTimer;
-        MusicPlayer  : TMediaPlayer;
-        MusicFadeIn  : TFloatAnimation;
+        FVolume        : Single;
+        FMusicToLoop   : String;
+        LoopTimer      : TTimer;
+        MusicPlayer    : TMediaPlayer;
+        MusicFadeIn    : TFloatAnimation;
         function MusicIsPlaying : Boolean;
         function ExtractMusicFromResource(ResourceID : String; LoopFile : Boolean = False) : String;
         procedure OnLoopTimer(Sender: TObject);
@@ -44,20 +44,18 @@ constructor TMusicEngine.Create(AForm : TForm);
 begin
   MusicPlayer := TMediaPlayer.Create(AForm);
   MusicPlayer.Parent := AForm;
-  LoopTimer   := TTimer.Create(Nil);
+  LoopTimer   := TTimer.Create(AForm);
   LoopTimer.Enabled  := False;
   LoopTimer.Interval := 30;
   LoopTimer.OnTimer  := OnLoopTimer;
   MusicFadeIn := TFloatAnimation.Create(MusicPlayer);
   MusicFadeIn.Parent := MusicPlayer;
-  {$IFDEF ANDROID}
-  MusicFadeIn.Delay := 4;
-  {$ENDIF}
-  MusicFadeIn.Duration := 5;
+
+  MusicFadeIn.Delay := 2;
+
+  MusicFadeIn.Duration := 0.1;
   MusicFadeIn.Enabled  := False;
   MusicFadeIn.PropertyName := 'volume';
-  MusicFadeIn.StartValue := 0;
-  MusicFadeIn.StopValue  := 0.8;
 end;
 
 destructor TMusicEngine.Destroy;
@@ -124,14 +122,15 @@ begin
     begin
       LoopTimer.Enabled := False;
       try
+        MusicPlayer.Stop;
         MusicPlayer.Clear;
+        EnableFadeIn;
         var FileName := ExtractMusicFromResource(FMusicToLoop, True);
         MusicPlayer.FileName := FileName;
         MusicPlayer.Play;
-        DisableFadeIn;
-        EnableFadeIn;
       finally
         loopTimer.Enabled := True;
+        DisableFadeIn;
       end;
     end;
 end;
@@ -149,6 +148,8 @@ begin
   if FVolume <> Value then
    begin
      FVolume := Value;
+     MusicFadeIn.StartValue := FVolume;
+     MusicFadeIn.StopValue  := FVolume;
      MusicPlayer.Volume := FVolume;
    end;
 end;
