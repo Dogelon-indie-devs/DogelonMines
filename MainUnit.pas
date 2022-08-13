@@ -373,6 +373,7 @@ begin
       CreditsFrame := TCreditsFrame.Create(CreditsRectangle);
       CreditsFrame.Parent := CreditsRectangle;
       CreditsFrame.Align  := TAlignLayout.Client;
+      CreditsFrame.ResizeGridElements;
     end;
 end;
 

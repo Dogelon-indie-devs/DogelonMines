@@ -26,6 +26,7 @@ type
     StoryRectangle: TRectangle;
     Text4: TText;
     Text5: TText;
+    CenterRectangle: TRectangle;
     procedure BackRectangleClick(Sender: TObject);
     procedure NextButtonClick(Sender: TObject);
   private

@@ -14,9 +14,9 @@ object CreditsFrame: TCreditsFrame
       Fill.Kind = None
       Margins.Left = 10.000000000000000000
       Margins.Right = 10.000000000000000000
-      Margins.Bottom = 10.000000000000000000
+      Margins.Bottom = 20.000000000000000000
       Position.X = 10.000000000000000000
-      Position.Y = 529.000000000000000000
+      Position.Y = 519.000000000000000000
       Size.Width = 300.000000000000000000
       Size.Height = 61.000000000000000000
       Size.PlatformDefault = False
@@ -71,7 +71,7 @@ object CreditsFrame: TCreditsFrame
       Padding.Right = 20.000000000000000000
       Padding.Bottom = 50.000000000000000000
       Size.Width = 320.000000000000000000
-      Size.Height = 529.000000000000000000
+      Size.Height = 519.000000000000000000
       Size.PlatformDefault = False
       Stroke.Kind = None
       object Text1: TText
@@ -86,9 +86,9 @@ object CreditsFrame: TCreditsFrame
           'longevity discord. We hope you'#39'll have fun with it, Martians! '
       end
       object Text2: TText
-        Align = Center
+        Align = Client
         Size.Width = 280.000000000000000000
-        Size.Height = 136.000000000000000000
+        Size.Height = 134.000000000000000000
         Size.PlatformDefault = False
         Text = 
           'Two devs made it from scratch in about 4 days, the entire thing ' +
@@ -103,7 +103,7 @@ object CreditsFrame: TCreditsFrame
         ItemWidth = 140.000000000000000000
         Orientation = Horizontal
         Position.X = 20.000000000000000000
-        Position.Y = 279.000000000000000000
+        Position.Y = 269.000000000000000000
         Size.Width = 280.000000000000000000
         Size.Height = 200.000000000000000000
         Size.PlatformDefault = False

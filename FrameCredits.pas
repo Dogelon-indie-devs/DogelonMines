@@ -37,6 +37,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure ResizeGridElements;
   end;
 
 implementation
@@ -50,6 +51,11 @@ procedure TCreditsFrame.BackRectangleClick(Sender: TObject);
 begin
   MainForm.MainRectangle.Visible    := True;
   MainForm.CreditsRectangle.Visible := False;
+end;
+
+procedure TCreditsFrame.ResizeGridElements;
+begin
+  GridLayout1.ItemWidth:= round(GridLayout1.Width/2);
 end;
 
 procedure TCreditsFrame.URLClick(Sender: TObject);
