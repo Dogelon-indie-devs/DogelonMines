@@ -502,6 +502,12 @@ begin
           game_running:= false;
           Label_level.Text:= 'GAME COMPLETE!';
           Label_level.Opacity:= 1;
+          {$IFDEF ANDROID}
+          MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_3GP);
+          {$ENDIF}
+          {$IFDEF WINDOWS}
+          MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_MP3);
+          {$ENDIF}
         end;
       end;
     end;
