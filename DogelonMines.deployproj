@@ -1046,6 +1046,16 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Win64\Release\DogelonMines.exe" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\</RemoteDir>
+            <RemoteName>DogelonMines.exe</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
         <DeployFile Include="Audio\Luminous-win.3gp" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\</RemoteDir>
             <RemoteName>Luminous-win.3gp</RemoteName>

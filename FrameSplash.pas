@@ -46,7 +46,6 @@ uses
 procedure TSplashFrame.DogelonIndieDevsLabsImageFloatAnimationFinish(Sender: TObject);
 begin
   Sleep(1000);
-
   MainForm.MainRectangle.Visible := True;
   MainForm.SplashRectangle.Visible := False;
 end;

@@ -1,13 +1,14 @@
 program DogelonMines;
 
-{$R *.dres}
+
 
 uses
   System.StartUpCopy,
   FMX.Forms,
   MainUnit in 'MainUnit.pas' {MainForm},
   FrameSplash in 'FrameSplash.pas' {SplashFrame: TFrame},
-  MusicUnit in 'MusicUnit.pas';
+  MusicUnit in 'MusicUnit.pas',
+  FrameStory in 'FrameStory.pas' {StoryFrame: TFrame};
 
 {$R *.res}
 

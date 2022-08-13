@@ -31,6 +31,7 @@ uses
   FMX.Gestures,
 
   FrameSplash,
+  FrameStory,
   MusicUnit;
 
 type
@@ -93,6 +94,7 @@ type
     VolumeTrackBar: TTrackBar;
     VolumeSubContainerRectangle: TRectangle;
     VolumeFloatAnimation: TFloatAnimation;
+    StoryRectangle: TRectangle;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -107,6 +109,7 @@ type
     procedure GameBackRectangleClick(Sender: TObject);
     procedure VolumeRectangleClick(Sender: TObject);
     procedure VolumeTrackBarTracking(Sender: TObject);
+    procedure MainStoryRectangleClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -131,7 +134,9 @@ type
     procedure Scroll_background_to_next_level;
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
-    var SplashFrame : TSplashFrame;
+    var
+      SplashFrame : TSplashFrame;
+      StoryFrame  : TStoryFrame;
   end;
 
  type
@@ -358,6 +363,20 @@ begin
   GameRectangle.Visible := True;
   MainRectangle.Visible := False;
   DogelonImageFloatAnimation.Enabled := True;
+end;
+
+procedure TMainForm.MainStoryRectangleClick(Sender: TObject);
+begin
+  SplashRectangle.Visible := False;
+  GameRectangle.Visible   := False;
+  MainRectangle.Visible   := False;
+  StoryRectangle.Visible  := True;
+  if Not Assigned(StoryFrame) then
+    begin
+      StoryFrame := TStoryFrame.Create(StoryRectangle);
+      StoryFrame.Parent := StoryRectangle;
+      StoryFrame.Align  := TAlignLayout.Client;
+    end;
 end;
 
 function TMainForm.Check_win: boolean;
@@ -636,12 +655,13 @@ begin
   SplashRectangle.Visible := True;
   GameRectangle.Visible   := False;
   MainRectangle.Visible   := False;
+  StoryRectangle.Visible  := False;
 
-  var SplashFrame := TSplashFrame.Create(SplashRectangle);
-      SplashFrame.Parent := SplashRectangle;
-      SplashFrame.Align  := TAlignLayout.Client;
-      SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
-      SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
+  SplashFrame := TSplashFrame.Create(SplashRectangle);
+  SplashFrame.Parent := SplashRectangle;
+  SplashFrame.Align  := TAlignLayout.Client;
+  SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
+  SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
 end;
 
 procedure TMainForm.GameBackRectangleClick(Sender: TObject);
