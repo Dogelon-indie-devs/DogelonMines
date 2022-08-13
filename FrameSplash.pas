@@ -47,7 +47,7 @@ procedure TSplashFrame.DogelonIndieDevsLabsImageFloatAnimationFinish(Sender: TOb
 begin
   Sleep(1000);
 
-  MainForm.HomeRectangle.Visible := True;
+  MainForm.MainRectangle.Visible := True;
   MainForm.SplashRectangle.Visible := False;
 end;
 

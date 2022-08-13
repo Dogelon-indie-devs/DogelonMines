@@ -35,7 +35,7 @@ uses
 
 type
   TMainForm = class(TForm)
-    HomeRectangle: TRectangle;
+    GameRectangle: TRectangle;
     SplashRectangle: TRectangle;
     TopRectangle: TRectangle;
     CenterRectangle: TRectangle;
@@ -67,9 +67,22 @@ type
     Label_level: TLabel;
     ShadowEffect3: TShadowEffect;
     Level_fadeout_anim: TFloatAnimation;
+    MainRectangle: TRectangle;
+    MainCenterRectangle: TRectangle;
+    MainCreditsRectangle: TRectangle;
+    ColorAnimation3: TColorAnimation;
+    ShadowEffect6: TShadowEffect;
+    Text3: TText;
+    MainPlayRectangle: TRectangle;
+    ColorAnimation1: TColorAnimation;
+    ShadowEffect4: TShadowEffect;
+    Text1: TText;
+    MainStoryRectangle: TRectangle;
+    ColorAnimation2: TColorAnimation;
+    ShadowEffect5: TShadowEffect;
+    Text2: TText;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure PlayRectangleClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button_uncover_gridClick(Sender: TObject);
     procedure Timer_gameTimer(Sender: TObject);
@@ -77,6 +90,8 @@ type
     procedure Rectangle_flag_tilesClick(Sender: TObject);
     procedure Rectangle_uncover_tilesClick(Sender: TObject);
     procedure Button_advance_bgClick(Sender: TObject);
+    procedure MainPlayRectangleClick(Sender: TObject);
+    procedure PlayRectangleClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -320,6 +335,13 @@ begin
       GameArray[X,Y].HintText.Text := 'SAFE';  // ✓
       found_safe_spot:= true;
     end;
+end;
+
+procedure TMainForm.MainPlayRectangleClick(Sender: TObject);
+begin
+  GameRectangle.Visible := True;
+  MainRectangle.Visible := False;
+  DogelonImageFloatAnimation.Enabled := True;
 end;
 
 function TMainForm.Check_win: boolean;
@@ -571,13 +593,14 @@ begin
   if DebugMode then exit;
 
   SplashRectangle.Visible := True;
-  HomeRectangle.Visible   := False;
+  GameRectangle.Visible   := False;
+  MainRectangle.Visible   := False;
+
   var SplashFrame := TSplashFrame.Create(SplashRectangle);
       SplashFrame.Parent := SplashRectangle;
       SplashFrame.Align  := TAlignLayout.Client;
       SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
       SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
-  DogelonImageFloatAnimation.Enabled := True;
 end;
 
 procedure TMainForm.Game_start;
@@ -620,8 +643,7 @@ begin
 end;
 
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
-
-  procedure Display_current_level;
+   procedure Display_current_level;
   begin
     Level_fadeout_anim.Enabled:= false;
     Label_level.Opacity:= 1;
