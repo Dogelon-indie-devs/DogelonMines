@@ -137,10 +137,15 @@ end;
 
 procedure TMusicEngine.PlayMusic(ResourceID : String);
 begin
-  StopMusic;
-  var FileName := ExtractMusicFromResource(ResourceID);
-  MusicPlayer.FileName := FileName;
-  MusicPlayer.Play;
+  try
+    StopMusic;
+    EnableFadeIn;
+    var FileName := ExtractMusicFromResource(ResourceID);
+    MusicPlayer.FileName := FileName;
+    MusicPlayer.Play;
+  finally
+    DisableFadeIn;
+  end;
 end;
 
 procedure TMusicEngine.SetFVolume(Value: Single);

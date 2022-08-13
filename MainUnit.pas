@@ -777,9 +777,11 @@ begin
   if PlayText.Text <> 'Play' then
     begin
       {$IFDEF ANDROID}
+      MusicEngine.Volume := VolumeTrackBar.Value;
       MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
       {$ENDIF}
       {$IFDEF MSWINDOWS}
+      MusicEngine.Volume := VolumeTrackBar.Value;
       MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
       {$ENDIF}
     end;
