@@ -27,6 +27,7 @@ type
     Text4: TText;
     Text5: TText;
     CenterRectangle: TRectangle;
+    FloatAnimation1: TFloatAnimation;
     procedure BackRectangleClick(Sender: TObject);
     procedure NextButtonClick(Sender: TObject);
   private
@@ -54,9 +55,11 @@ begin
     begin
       if tag <= 9 then
         begin
+          FloatAnimation1.Enabled := False;
           var next_image:= ImageList1.Source[Tag].MultiResBitmap[0];
           Image1.MultiResBitmap[0].Assign(next_image);
           tag:= tag + 1;
+          FloatAnimation1.Enabled := True;
         end
       else
         begin
