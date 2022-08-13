@@ -81,6 +81,14 @@ type
     ColorAnimation2: TColorAnimation;
     ShadowEffect5: TShadowEffect;
     Text2: TText;
+    GameBackRectangle: TRectangle;
+    ColorAnimation4: TColorAnimation;
+    ShadowEffect7: TShadowEffect;
+    Text4: TText;
+    VolumeRectangle: TRectangle;
+    ColorAnimation5: TColorAnimation;
+    ShadowEffect8: TShadowEffect;
+    Text5: TText;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -92,6 +100,7 @@ type
     procedure Button_advance_bgClick(Sender: TObject);
     procedure MainPlayRectangleClick(Sender: TObject);
     procedure PlayRectangleClick(Sender: TObject);
+    procedure GameBackRectangleClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -575,7 +584,7 @@ begin
   Reset_background_image;
 
   {$IFDEF MSWINDOWS}
-  Constraints.MinWidth := 310;
+  Constraints.MinWidth := 350;
   {$ENDIF}
 
   if DebugMode then
@@ -601,6 +610,12 @@ begin
       SplashFrame.Align  := TAlignLayout.Client;
       SplashFrame.DogelonIndieDevsLabsImageFloatAnimation.Enabled := True;
       SplashFrame.DogelonIndieDevsLabsTextFloatAnimation.Enabled  := True;
+end;
+
+procedure TMainForm.GameBackRectangleClick(Sender: TObject);
+begin
+  MainRectangle.Visible := True;
+  GameRectangle.Visible := False;
 end;
 
 procedure TMainForm.Game_start;
