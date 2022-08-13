@@ -5,7 +5,16 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Objects, FMX.Effects, FMX.Ani, FMX.Controls.Presentation, FMX.Layouts;
+  FMX.Objects, FMX.Effects, FMX.Ani, FMX.Controls.Presentation, FMX.Layouts,
+  {$IFDEF MSWINDOWS}
+  Winapi.ShellAPI, Winapi.Windows
+  {$ENDIF}
+  {$IFDEF ANDROID}
+  Androidapi.JNI.GraphicsContentViewText,
+  Androidapi.JNI.Net,
+  Androidapi.JNI.App,
+  Androidapi.helpers
+  {$ENDIF};
 
 type
   TCreditsFrame = class(TFrame)
@@ -32,7 +41,12 @@ type
     Label11: TLabel;
     Label12: TLabel;
     procedure BackRectangleClick(Sender: TObject);
-    procedure URLClick(Sender: TObject);
+    procedure Label2Click(Sender: TObject);
+    procedure Label4Click(Sender: TObject);
+    procedure Label6Click(Sender: TObject);
+    procedure Label8Click(Sender: TObject);
+    procedure Label10Click(Sender: TObject);
+    procedure Label12Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,11 +55,25 @@ type
   end;
 
 implementation
-               
+
 uses
   MainUnit;
 
 {$R *.fmx}
+
+procedure Open_URL(URL : String);
+begin
+{$IFDEF ANDROID}
+  var Intent := TJIntent.Create;
+  Intent.setAction(TJIntent.JavaClass.ACTION_VIEW);
+  Intent.setData(StrToJURI(URL));
+  tandroidhelper.Activity.startActivity(Intent);
+{$ENDIF}
+  // SharedActivity.startActivity(Intent);
+{$IFDEF MSWINDOWS}
+  ShellExecute(0, 'OPEN', PWideChar(URL), nil, nil, SW_SHOWNORMAL);
+{$ENDIF}
+end;
 
 procedure TCreditsFrame.BackRectangleClick(Sender: TObject);
 begin
@@ -53,27 +81,39 @@ begin
   MainForm.CreditsRectangle.Visible := False;
 end;
 
+procedure TCreditsFrame.Label10Click(Sender: TObject);
+begin
+  Open_URL('https://discord.gg/elongevity')
+end;
+
+procedure TCreditsFrame.Label12Click(Sender: TObject);
+begin
+  Open_URL('https://opensea.io/collection/dogelon-mars-comic-series')
+end;
+
+procedure TCreditsFrame.Label2Click(Sender: TObject);
+begin
+  Open_URL('https://dogelon.dev/')
+end;
+
+procedure TCreditsFrame.Label4Click(Sender: TObject);
+begin
+  Open_URL('https://github.com/Dogelon-indie-devs/DogelonMines')
+end;
+
+procedure TCreditsFrame.Label6Click(Sender: TObject);
+begin
+  Open_URL('https://soundcloud.com/user-882723147')
+end;
+
+procedure TCreditsFrame.Label8Click(Sender: TObject);
+begin
+  Open_URL('https://play.google.com/store/apps/details?id=org.dogelon_indie_devs.DogelonMines')
+end;
+
 procedure TCreditsFrame.ResizeGridElements;
 begin
   GridLayout1.ItemWidth:= round(GridLayout1.Width/2);
-end;
-
-procedure TCreditsFrame.URLClick(Sender: TObject);
-
-  procedure Open_URL(URL:string);
-  begin
-    // how?
-  end;
-
-begin
-  with Sender as TLabel do
-  case Tag of
-  1: Open_URL('https://dogelon.dev/');
-  2: Open_URL('https://github.com/Dogelon-indie-devs/DogelonMines');
-  3: Open_URL('https://soundcloud.com/user-882723147');
-  4: Open_URL('https://discord.gg/elongevity');
-  5: Open_URL('https://opensea.io/collection/dogelon-mars-comic-series');
-  end;
 end;
 
 end.

@@ -84,6 +84,7 @@ object CreditsFrame: TCreditsFrame
         Text = 
           'This little game is our submission for the summer Hackathon in E' +
           'longevity discord. We hope you'#39'll have fun with it, Martians! '
+        TextSettings.Font.Family = 'Roboto'
       end
       object Text2: TText
         Align = Client
@@ -96,10 +97,11 @@ object CreditsFrame: TCreditsFrame
           ' github. The main goal was to prove that pretty cool games and a' +
           'pps can be built really quickly, all you need is motivation and ' +
           'some skill.'
+        TextSettings.Font.Family = 'Roboto'
       end
       object GridLayout1: TGridLayout
         Align = Bottom
-        ItemHeight = 32.000000000000000000
+        ItemHeight = 25.000000000000000000
         ItemWidth = 140.000000000000000000
         Orientation = Horizontal
         Position.X = 20.000000000000000000
@@ -109,34 +111,39 @@ object CreditsFrame: TCreditsFrame
         Size.PlatformDefault = False
         TabOrder = 2
         object Label1: TLabel
+          StyledSettings = [Style, FontColor]
           Margins.Right = 5.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.HorzAlign = Trailing
           Text = 'Game creators:'
           TabOrder = 11
         end
         object Label2: TLabel
           Cursor = crHandPoint
-          StyledSettings = [Family, Size]
+          StyledSettings = []
+          HitTest = True
           Margins.Left = 5.000000000000000000
           Position.X = 145.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.FontColor = claBlue
           Text = 'https://dogelon.dev'
           TabOrder = 9
-          OnClick = URLClick
+          OnClick = Label2Click
         end
         object Label3: TLabel
+          StyledSettings = [Style, FontColor]
           Margins.Right = 5.000000000000000000
-          Position.Y = 32.000000000000000000
+          Position.Y = 25.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.HorzAlign = Trailing
           Text = 'Full source code:'
           TabOrder = 10
@@ -144,24 +151,28 @@ object CreditsFrame: TCreditsFrame
         object Label4: TLabel
           Tag = 1
           Cursor = crHandPoint
-          StyledSettings = [Family, Size]
+          StyledSettings = []
+          HitTest = True
           Margins.Left = 5.000000000000000000
           Position.X = 145.000000000000000000
-          Position.Y = 32.000000000000000000
+          Position.Y = 25.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.FontColor = claBlue
           Text = 'Github'
           TabOrder = 7
+          OnClick = Label4Click
         end
         object Label5: TLabel
+          StyledSettings = [Style, FontColor]
           Margins.Right = 5.000000000000000000
-          Position.Y = 64.000000000000000000
+          Position.Y = 50.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.HorzAlign = Trailing
           Text = 'Music:'
           TabOrder = 8
@@ -169,24 +180,28 @@ object CreditsFrame: TCreditsFrame
         object Label6: TLabel
           Tag = 2
           Cursor = crHandPoint
-          StyledSettings = [Family, Size]
+          StyledSettings = []
+          HitTest = True
           Margins.Left = 5.000000000000000000
           Position.X = 145.000000000000000000
-          Position.Y = 64.000000000000000000
+          Position.Y = 50.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.FontColor = claBlue
           Text = 'InducedLuminous '
           TabOrder = 5
+          OnClick = Label6Click
         end
         object Label7: TLabel
+          StyledSettings = [Style, FontColor]
           Margins.Right = 5.000000000000000000
-          Position.Y = 96.000000000000000000
+          Position.Y = 75.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.HorzAlign = Trailing
           Text = 'Game listing:'
           TabOrder = 6
@@ -194,24 +209,28 @@ object CreditsFrame: TCreditsFrame
         object Label8: TLabel
           Tag = 3
           Cursor = crHandPoint
-          StyledSettings = [Family, Size]
+          StyledSettings = []
+          HitTest = True
           Margins.Left = 5.000000000000000000
           Position.X = 145.000000000000000000
-          Position.Y = 96.000000000000000000
+          Position.Y = 75.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.FontColor = claBlue
           Text = 'Google Play'
           TabOrder = 3
+          OnClick = Label8Click
         end
         object Label9: TLabel
+          StyledSettings = [Style, FontColor]
           Margins.Right = 5.000000000000000000
-          Position.Y = 128.000000000000000000
+          Position.Y = 100.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.HorzAlign = Trailing
           Text = 'Elongevity discord'
           TabOrder = 4
@@ -219,24 +238,28 @@ object CreditsFrame: TCreditsFrame
         object Label10: TLabel
           Tag = 4
           Cursor = crHandPoint
-          StyledSettings = [Family, Size]
+          StyledSettings = []
+          HitTest = True
           Margins.Left = 5.000000000000000000
           Position.X = 145.000000000000000000
-          Position.Y = 128.000000000000000000
+          Position.Y = 100.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.FontColor = claBlue
           Text = 'discord.gg/elongevity'
           TabOrder = 1
+          OnClick = Label10Click
         end
         object Label11: TLabel
+          StyledSettings = [Style, FontColor]
           Margins.Right = 5.000000000000000000
-          Position.Y = 160.000000000000000000
+          Position.Y = 125.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.HorzAlign = Trailing
           Text = 'Dogelon NFT comic:'
           TabOrder = 2
@@ -244,17 +267,19 @@ object CreditsFrame: TCreditsFrame
         object Label12: TLabel
           Tag = 5
           Cursor = crHandPoint
-          StyledSettings = [Family, Size]
+          StyledSettings = []
+          HitTest = True
           Margins.Left = 5.000000000000000000
           Position.X = 145.000000000000000000
-          Position.Y = 160.000000000000000000
+          Position.Y = 125.000000000000000000
           Size.Width = 135.000000000000000000
-          Size.Height = 32.000000000000000000
+          Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TextSettings.Font.StyleExt = {04040000000000000004000000}
+          TextSettings.Font.Family = 'Roboto'
           TextSettings.FontColor = claBlue
           Text = 'opensea.io'
           TabOrder = 0
+          OnClick = Label12Click
         end
       end
     end
