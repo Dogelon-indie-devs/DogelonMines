@@ -20,12 +20,12 @@ uses
         LoopTimer      : TTimer;
         MusicPlayer    : TMediaPlayer;
         MusicFadeIn    : TFloatAnimation;
-        function MusicIsPlaying : Boolean;
         function ExtractMusicFromResource(ResourceID : String; LoopFile : Boolean = False) : String;
         procedure OnLoopTimer(Sender: TObject);
         procedure SetFVolume(Value: Single);
       public
         property Volume : Single write SetFVolume;
+        function MusicIsPlaying : Boolean;
         procedure EnableFadeIn;
         procedure DisableFadeIn;
         procedure LoopMusic(ResourceID : String);

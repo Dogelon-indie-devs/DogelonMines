@@ -12,6 +12,24 @@
     <ItemGroup Condition="'$(Platform)'=='Win32'"/>
     <ItemGroup Condition="'$(Platform)'=='OSXARM64'"/>
     <ItemGroup Condition="'$(Platform)'=='Android64'">
+        <DeployFile Include="Audio\lose.3gp" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>lose.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\lose.3gp" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>lose.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Android64\Release\strings.xml" Condition="'$(Config)'=='Release'">
             <RemoteDir>DogelonMines\res\values\</RemoteDir>
             <RemoteName>strings.xml</RemoteName>
@@ -44,6 +62,24 @@
             <RemoteName>splash_image_def.9.png</RemoteName>
             <DeployClass>Android_SplashImage470</DeployClass>
             <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-win.mp3" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-win.mp3</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-win.mp3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-win.mp3</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -246,6 +282,42 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Audio\Luminous-loop.3gp" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-loop.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-loop.3gp" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-loop.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-win.3gp" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-win.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\Luminous-win.3gp" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-win.3gp</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Android64\Debug\AndroidManifest.xml" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\</RemoteDir>
             <RemoteName>AndroidManifest.xml</RemoteName>
@@ -374,6 +446,15 @@
             <Overwrite>True</Overwrite>
             <Required>True</Required>
         </DeployFile>
+        <DeployFile Include="Audio\Luminous-loop.mp3" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-loop.mp3</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_24x24.png" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\res\drawable-mdpi\</RemoteDir>
             <RemoteName>ic_notification.png</RemoteName>
@@ -392,11 +473,38 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="Audio\Luminous-loop.mp3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>Luminous-loop.mp3</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="Android64\Debug\DogelonMines.classes" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\classes\</RemoteDir>
             <RemoteName>DogelonMines.classes</RemoteName>
             <DeployClass>AndroidClasses</DeployClass>
             <Operation>64</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\lose.mp3" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>lose.mp3</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="Audio\lose.mp3" Condition="'$(Config)'=='Release'">
+            <RemoteDir>DogelonMines\assets\internal\</RemoteDir>
+            <RemoteName>lose.mp3</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
@@ -983,9 +1091,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Audio\Luminous-lose.mp3" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="Audio\lose.3gp" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\</RemoteDir>
-            <RemoteName>Luminous-lose.mp3</RemoteName>
+            <RemoteName>lose.3gp</RemoteName>
             <DeployClass>ProjectFile</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1011,9 +1119,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="Audio\Luminous-lose.3gp" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="Audio\lose.mp3" Condition="'$(Config)'=='Debug'">
             <RemoteDir>DogelonMines\</RemoteDir>
-            <RemoteName>Luminous-lose.3gp</RemoteName>
+            <RemoteName>lose.mp3</RemoteName>
             <DeployClass>ProjectFile</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>

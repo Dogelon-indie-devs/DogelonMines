@@ -476,6 +476,12 @@ begin
         begin
           game_running:= false;
           FloatAnimation_explosion.Enabled:= true;
+          {$IFDEF ANDROID}
+          MusicEngine.PlayMusic(LOSE_SOUND_RESOURCE_ID_3GP);
+          {$ENDIF}
+          {$IFDEF MSWINDOWS}
+          MusicEngine.PlayMusic(LOSE_SOUND_RESOURCE_ID_MP3);
+          {$ENDIF}
         end;
     end
   else
@@ -790,6 +796,16 @@ begin
   CreateGameElements;
   Game_start;
 
+  if PlayText.Text <> 'Play' then
+    begin
+      {$IFDEF ANDROID}
+      MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
+      {$ENDIF}
+      {$IFDEF MSWINDOWS}
+      MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
+      {$ENDIF}
+    end;
+
   PlayRectangle.tag := 0;
   PlayText.Text:= 'Restart';
 end;
@@ -797,12 +813,6 @@ end;
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
 begin
   Handle_level_transition;
-  {$IFDEF ANDROID}
-  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
-  {$ENDIF}
-  {$IFDEF MSWINDOWS}
-  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
-  {$ENDIF}
 end;
 
 procedure TMainForm.Rectangle_flag_tilesClick(Sender: TObject);
