@@ -33,6 +33,15 @@ uses
 
 procedure TStoryFrame.BackRectangleClick(Sender: TObject);
 begin
+  with Sender as TRectangle do
+    begin
+      var next_image:= ImageList1.Source[Tag].MultiResBitmap[0];
+      Image1.MultiResBitmap[0].Assign(next_image);
+      tag:= tag + 1;
+    end;
+
+  exit;
+
   MainForm.MainRectangle.Visible := True;
   MainForm.StoryRectangle.Visible := False;
 end;
