@@ -2,7 +2,7 @@
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.dogelon_indie_devs.DogelonMines"
-    android:versionCode="2"
+    android:versionCode="3"
     android:versionName="1.0.0"
     android:installLocation="preferExternal">
     <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="31" />
