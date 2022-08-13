@@ -505,7 +505,7 @@ begin
           {$IFDEF ANDROID}
           MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_3GP);
           {$ENDIF}
-          {$IFDEF WINDOWS}
+          {$IFDEF MSWINDOWS}
           MusicEngine.PlayMusic(WINS_SOUND_RESOURCE_ID_MP3);
           {$ENDIF}
         end;
@@ -672,10 +672,12 @@ begin
 
   MusicEngine := TMusicEngine.Create(MainForm);
   MusicEngine.Volume := 0.5;
-  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
-
+  {$IFDEF ANDROID}
+  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
+  {$ENDIF}
 
   {$IFDEF MSWINDOWS}
+  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
   Constraints.MinWidth := 320;
   Constraints.MinHeight:= 600;
   {$ENDIF}
@@ -795,6 +797,12 @@ end;
 procedure TMainForm.PlayRectangleClick(Sender: TObject);
 begin
   Handle_level_transition;
+  {$IFDEF ANDROID}
+  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_3GP);
+  {$ENDIF}
+  {$IFDEF MSWINDOWS}
+  MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
+  {$ENDIF}
 end;
 
 procedure TMainForm.Rectangle_flag_tilesClick(Sender: TObject);
