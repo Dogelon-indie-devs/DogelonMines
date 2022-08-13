@@ -774,6 +774,12 @@ begin
   CreateGameElements;
   Game_start;
 
+  PlayRectangle.tag := 0;
+  PlayText.Text:= 'Restart';
+end;
+
+procedure TMainForm.PlayRectangleClick(Sender: TObject);
+begin
   if PlayText.Text <> 'Play' then
     begin
       {$IFDEF ANDROID}
@@ -785,13 +791,6 @@ begin
       MusicEngine.LoopMusic(LOOP_SOUND_RESOURCE_ID_MP3);
       {$ENDIF}
     end;
-
-  PlayRectangle.tag := 0;
-  PlayText.Text:= 'Restart';
-end;
-
-procedure TMainForm.PlayRectangleClick(Sender: TObject);
-begin
   Handle_level_transition;
 end;
 
