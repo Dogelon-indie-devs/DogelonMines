@@ -1,0 +1,67 @@
+object CreditsFrame: TCreditsFrame
+  Size.Width = 299.000000000000000000
+  Size.Height = 481.000000000000000000
+  Size.PlatformDefault = False
+  object MainRectangle: TRectangle
+    Align = Client
+    Fill.Color = claWhite
+    Size.Width = 299.000000000000000000
+    Size.Height = 481.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object BottomRectangle: TRectangle
+      Align = Bottom
+      Fill.Kind = None
+      Margins.Left = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 10.000000000000000000
+      Position.X = 10.000000000000000000
+      Position.Y = 410.000000000000000000
+      Size.Width = 279.000000000000000000
+      Size.Height = 61.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object BackRectangle: TRectangle
+        Align = Center
+        Cursor = crHandPoint
+        Fill.Color = xFFFDE25F
+        Size.Width = 150.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        XRadius = 12.000000000000000000
+        YRadius = 12.000000000000000000
+        OnClick = BackRectangleClick
+        object ColorAnimation3: TColorAnimation
+          Enabled = True
+          Duration = 0.200000002980232200
+          Inverse = True
+          PropertyName = 'Fill.Color'
+          StartValue = xFFFDE25F
+          StopValue = xFFF9D527
+          Trigger = 'IsMouseOver=true'
+          TriggerInverse = 'IsMouseOver=false'
+        end
+        object ShadowEffect6: TShadowEffect
+          Distance = 3.000000000000000000
+          Direction = 45.000000000000000000
+          Softness = 0.300000011920929000
+          Opacity = 0.600000023841857900
+          ShadowColor = claBlack
+        end
+        object Text3: TText
+          Align = Client
+          HitTest = False
+          Size.Width = 150.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Back'
+          TextSettings.Font.Family = 'Roboto'
+          TextSettings.Font.Size = 18.000000000000000000
+          TextSettings.Font.StyleExt = {00050000000000000004000000}
+          TextSettings.FontColor = xFF111422
+        end
+      end
+    end
+  end
+end

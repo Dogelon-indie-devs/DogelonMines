@@ -32,6 +32,7 @@ uses
 
   FrameSplash,
   FrameStory,
+  FrameCredits,
   MusicUnit;
 
 type
@@ -95,6 +96,7 @@ type
     VolumeSubContainerRectangle: TRectangle;
     VolumeFloatAnimation: TFloatAnimation;
     StoryRectangle: TRectangle;
+    CreditsRectangle: TRectangle;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -110,6 +112,7 @@ type
     procedure VolumeRectangleClick(Sender: TObject);
     procedure VolumeTrackBarTracking(Sender: TObject);
     procedure MainStoryRectangleClick(Sender: TObject);
+    procedure MainCreditsRectangleClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -135,8 +138,9 @@ type
     procedure CaseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure CaseGesture(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     var
-      SplashFrame : TSplashFrame;
-      StoryFrame  : TStoryFrame;
+      SplashFrame  : TSplashFrame;
+      StoryFrame   : TStoryFrame;
+      CreditsFrame : TCreditsFrame;
   end;
 
  type
@@ -358,6 +362,18 @@ begin
     end;
 end;
 
+procedure TMainForm.MainCreditsRectangleClick(Sender: TObject);
+begin
+  CreditsRectangle.Visible := True;
+  MainRectangle.Visible    := False;
+    if Not Assigned(CreditsFrame) then
+    begin
+      CreditsFrame := TCreditsFrame.Create(CreditsRectangle);
+      CreditsFrame.Parent := CreditsRectangle;
+      CreditsFrame.Align  := TAlignLayout.Client;
+    end;
+end;
+
 procedure TMainForm.MainPlayRectangleClick(Sender: TObject);
 begin
   GameRectangle.Visible := True;
@@ -367,8 +383,6 @@ end;
 
 procedure TMainForm.MainStoryRectangleClick(Sender: TObject);
 begin
-  SplashRectangle.Visible := False;
-  GameRectangle.Visible   := False;
   MainRectangle.Visible   := False;
   StoryRectangle.Visible  := True;
   if Not Assigned(StoryFrame) then
@@ -656,6 +670,7 @@ begin
   GameRectangle.Visible   := False;
   MainRectangle.Visible   := False;
   StoryRectangle.Visible  := False;
+  CreditsRectangle.Visible  := False;
 
   SplashFrame := TSplashFrame.Create(SplashRectangle);
   SplashFrame.Parent := SplashRectangle;

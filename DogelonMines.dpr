@@ -8,7 +8,8 @@ uses
   MainUnit in 'MainUnit.pas' {MainForm},
   FrameSplash in 'FrameSplash.pas' {SplashFrame: TFrame},
   MusicUnit in 'MusicUnit.pas',
-  FrameStory in 'FrameStory.pas' {StoryFrame: TFrame};
+  FrameStory in 'FrameStory.pas' {StoryFrame: TFrame},
+  FrameCredits in 'FrameCredits.pas' {CreditsFrame: TFrame};
 
 {$R *.res}
 
