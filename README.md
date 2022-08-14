@@ -18,9 +18,9 @@ Secondary: Windows x64, mostly for testing, not public
 * Android SDK 25.2.5, target API level 31
 
 # Credits
-lead dev, game logic: CryptoTangerine
-android branch, UI styling: Pulsar
-background music: InducedLuminous / https://soundcloud.com/user-882723147
-story slides: dogelon token comic / https://opensea.io/collection/dogelon-mars-comic-series
-some graphics: Pixabay
-some sounds: SoundsCrate
+* lead dev, game logic: CryptoTangerine
+* android branch, UI styling: Pulsar
+* background music: InducedLuminous / https://soundcloud.com/user-882723147
+* story slides: dogelon token comic / https://opensea.io/collection/dogelon-mars-comic-series
+* some graphics: Pixabay
+* some sounds: SoundsCrate
