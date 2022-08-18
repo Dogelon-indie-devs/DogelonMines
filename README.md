@@ -3,6 +3,9 @@ Small minesweeper-style game in the Dogelon universe.
 
 Developed for the Elongevity Hackathon 2022 event. Two devs made it from scratch in about 4 days, the entire thing is written in Delphi 11 and full source code can be found on our github. The main goal was to prove that pretty cool games and apps can be built really quickly, all you need is motivation and some skill.
 
+# Deployed at
+https://play.google.com/store/apps/details?id=org.dogelon_indie_devs.DogelonMines
+
 # Game goal
 Solve 30 levels with 5x5 boards each containing 3 mines. Each safely uncovered tile grants 1 point in score, every correctly flagged mine grants 10 points at the end of each level.
 
